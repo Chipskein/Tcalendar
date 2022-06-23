@@ -1,0 +1,41 @@
+const { DataTypes, Model } = require('sequelize');
+const { db } = require('../conf/sequelize');
+class Enterprises extends Model {}
+const tableConfig={ 
+    sequelize: db, 
+    schema: 'public',
+    modelName: 'Enterprises'
+}
+const tableDefinition={
+    id:{
+        type:DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    owner:{
+        type:DataTypes.INTEGER,
+        references: {
+            model: Users,      
+            key: 'id',
+          }
+    },
+    name:{
+        type:DataTypes.STRING,
+        allowNull: false
+    },
+    created_at:{
+        type:DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
+    updated_at:{
+        type:DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
+    active:{
+        type:DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+}
+Enterprises.init(tableDefinition,tableConfig);
+Enterprises.sync();
+module.exports = { Enterprises };
