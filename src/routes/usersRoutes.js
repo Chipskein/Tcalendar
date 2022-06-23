@@ -1,5 +1,9 @@
 const {Router} = require("express");
 const router=Router();
-const { Users } = require('../models/usersModel')
-router.get('/',(req,res)=>{return res.send('TESTANDo')});
+
+const UserController = require("../controllers/usersController");
+
+router.post('/',UserController.register);
+router.post('/register',UserController.login);
+
 module.exports=router;
