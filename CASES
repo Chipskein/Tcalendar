@@ -1,0 +1,52 @@
+USERS:
+    id
+    email
+    name
+    password
+    created_at
+    updated_at
+    active
+ENTERPRISES:
+    id
+    owner => USERS.id
+    name
+    created_at
+    updated_at
+    active
+ENTERPRISE_USERS:
+    id_enterprise => ENTERPRISES.id
+    id_user => USERS.id
+    created_at
+    updated_at
+    active
+TIMES:
+    id
+    id_enterprise => ENTERPRISES.id
+    name
+    created_at
+    updated_at
+    active
+TIMES_USERS:
+    id_user  => USERS.id
+    id_time  => TIMES.id
+    created_at
+    updated_at
+    active
+TIMES_INVITE:
+    id_user
+    id_time
+    status // waiting || accepted || refused
+SCHEDULES:
+    id
+    id_time  => TIMES.id
+    updated_at
+    created_at
+    date
+    duration
+    hasEnded
+
+
+    
+
+
+
