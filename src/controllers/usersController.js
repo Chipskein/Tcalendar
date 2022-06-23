@@ -15,5 +15,21 @@ class UserController{
 
         }
     }
+    static update(req,res){
+        try{
+
+        }
+        catch(err){
+
+        }
+    }
+    static resetPassword(req,res){
+        try{
+
+        }
+        catch(err){
+
+        }
+    }
 }
 module.exports=UserController;
