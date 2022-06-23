@@ -1,10 +1,10 @@
 const { DataTypes, Model } = require('sequelize');
 const { db } = require('../conf/sequelize');
-class Times_invite extends Model {}
+class Enterprise_invite extends Model {}
 const tableConfig={ 
     sequelize: db, 
     schema: 'public',
-    modelName: 'Times_invite'
+    modelName: 'Enterprise_invite'
 }
 const tableDefinition={
     id_user:{
@@ -14,10 +14,10 @@ const tableDefinition={
             key: 'id',
           }
     },
-    id_time:{
+    id_enterprise:{
         type:DataTypes.INTEGER,
         references: {
-            model: Times,      
+            model: Enterprise,      
             key: 'id',
           }
     },
@@ -25,6 +25,6 @@ const tableDefinition={
         type:DataTypes.STRING
     }
 }
-Times_invite.init(tableDefinition,tableConfig);
-Times_invite.sync();
-module.exports = { Times_invite };
+Enterprise_invite.init(tableDefinition,tableConfig);
+Enterprise_invite.sync();
+module.exports = { Enterprise_invite };

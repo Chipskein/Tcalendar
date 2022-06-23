@@ -3,6 +3,7 @@ USERS:
     email
     name
     password
+    img 
     created_at
     updated_at
     active
@@ -35,6 +36,10 @@ TIMES_USERS:
 TIMES_INVITE:
     id_user
     id_time
+    status // waiting || accepted || refused
+ENTERPRISE_INVITE:
+    id_user
+    id_enterprise
     status // waiting || accepted || refused
 SCHEDULES:
     id
