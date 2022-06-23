@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const { db } = require('../conf/sequelize');
+const { db } = require('../config/sequelize');
 class Enterprise_invite extends Model {}
 const tableConfig={ 
     sequelize: db, 

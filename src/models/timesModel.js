@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
-const { db } = require('../conf/sequelize');
+const { db } = require('../config/sequelize');
 class Times extends Model {}
 const tableConfig={ 
     sequelize: db, 
