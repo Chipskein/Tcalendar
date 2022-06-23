@@ -6,9 +6,14 @@ const port=process.env.PORT || 8080;
 app.set('view engine','ejs');
 app.set('views','./src/views');
 
+app.get('/', async (req, res) => {
+    return res.redirect('login.html');
+});
+
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(express.static('public'));
+
 
 //routes
 const enterprisesRoutes=require('./routes/enterprisesRoutes.js');
