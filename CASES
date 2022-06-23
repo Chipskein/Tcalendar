@@ -37,6 +37,10 @@ TIMES_INVITE:
     id_user
     id_time
     status // waiting || accepted || refused
+ENTERPRISE_INVITE:
+    id_user
+    id_enterprise
+    status // waiting || accepted || refused
 SCHEDULES:
     id
     id_time  => TIMES.id
