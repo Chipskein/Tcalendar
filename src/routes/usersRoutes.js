@@ -11,7 +11,9 @@ router.get('/register',isNotLogged,UserController.showRegister);
 router.post('/register',isNotLogged,upload.single('image'),UserController.register);
 router.post('/login',isNotLogged,UserController.login);
 
-router.get('/reset',isNotLogged,UserController.showResetPasswordForm);
+router.get('/forget',isNotLogged,UserController.showForgetMyPasswordForm);
+router.post('/forget',isNotLogged,UserController.forgetMyPasswordForm);
+router.get('/resetpassword',isNotLogged,UserController.showResetPasswordForm);
 router.get('/active',isNotLogged,UserController.activeUser);
 
 //logged

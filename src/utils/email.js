@@ -31,7 +31,7 @@ module.exports={
             case "reset_password":
                 template='reset_password';
                 subject="Tcalendar | Solicitação de nova senha";
-                link=module.exports.generateLinkEmail('reset_passwod',data,server_url);
+                link=module.exports.generateLinkEmail('reset_password',data,server_url);
                 values=[{type:"user_name",value:data.name},{type:"user_link",value:link}]
                 break;
             case "notification_schedule":
@@ -54,13 +54,13 @@ module.exports={
                 url+=`/users/active?token=${data.token}`
                 break;
             case "reset_password":
-                url+=`/users/reset?token=${data.token}`
+                url+=`/users/resetpassword?token=${data.token}`
                 break;
         }
         return url
     },
-    sendEmail:async (data)=>{
-        const {subject,html}=module.exports.prepareEmail('active_user',data,data.server_url);
+    sendEmail:async (data,type='active_user')=>{
+        const {subject,html}=module.exports.prepareEmail(type,data,data.server_url);
         await module.exports.sendNodemailerMail(data.email,subject,html);
     }
 }

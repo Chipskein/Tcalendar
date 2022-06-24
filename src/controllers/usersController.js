@@ -6,20 +6,21 @@ const { createJWT,getDataFromToken }=require('../utils/jwt');
 class UserController{
 
     static async showRegister(req,res){
-        return res.render('register');
+        return res.render('register',{err:false});
     }
     static async showHome(req,res){
         const user=req.session.user;
         return res.render('home',{user});
     }
     static async showLogin(req,res){
-        return res.render('login');
+        return res.render('login',{err:false});
     }
     static async showResetPasswordForm(req,res){
         try{
             const { token }=req.query;
             const { id } = getDataFromToken(token);
             let user=await Users.findAll({where: { id }})
+            user=user[0].dataValues;  
             req.session.user=user;
             return res.render('forgetPassword',{user});
         }
@@ -27,7 +28,30 @@ class UserController{
             return res.status(400).json(err.message);
         }
     }
-
+    static async showForgetMyPasswordForm(req,res){
+        return res.render('showForgetPassword',{err:false});
+    }
+    static async forgetMyPasswordForm(req,res){
+        try{
+            const { email }=req.body;
+            let user=await Users.findAll({where: { email }});
+            if(user.length==0) return res.render('showForgetPassword',{err:'Usuario nao existe'});   
+            user=user[0].dataValues;      
+            await sendEmail({
+                email:user.email,
+                server_url:req.protocol + '://' + req.get('host'),
+                token:createJWT({id:user.id},'temp'),
+                name:user.name,
+                time:"",
+                enterprise:""
+            },'reset_password');
+            return res.send('Email Enviado');
+        }
+        catch(err){
+            return res.render('showForgetPassword',{err:err.message});   
+        }
+    }
+    
     static async register(req,res){
         try{
             const {name,password,email} =req.body;
@@ -56,18 +80,17 @@ class UserController{
                 time:"",
                 enterprise:""
             });
-
             return res.render('active_account',{user:data});
         }
         catch(err){
-            return res.status(500).json(err.message);
+            return res.render('register',{err:err.message});            
         }
     }
     static async login(req,res){
         try{
             const { email,password }=req.body;
             let user=await Users.findAll({where: { email }});
-            if(user.length==0) throw Error('Usuário não Encontrado')
+            if(user.length==0) return res.render('login',{err:'Usuario nao existe'});   
             user=user[0].dataValues;      
             if(user.active){      
                 if(verifyPassword(password,user.password)){
@@ -75,7 +98,7 @@ class UserController{
                     req.session.user=user;
                     return res.redirect('/users/home');
                 } else{
-                    return res.redirect('/users/login');
+                    return res.render('login',{err:'Credenciais invalidas'});   
                 }
             } else{
                 await sendEmail({
@@ -90,7 +113,7 @@ class UserController{
             }
         }
         catch(err){
-            return res.status(400).json(err.message);
+            return res.render('login',{err:err.message});   
         }
     }
     static async logoff(req,res){
@@ -110,17 +133,17 @@ class UserController{
             if(password) updateDataRow.password=hashPassword(password);
             if(name){
                 updateDataRow.name=name;
-                req.session.name=name;
+                req.session.user.name=name;
             };
             if(email){
                 updateDataRow.email=email;
-                req.session.name=email;
+                req.session.user.name=email;
             };
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await UploadImage(req.file)
                 if(link){
                     updateDataRow.img=link;
-                    req.session.img=link;
+                    req.session.user.img=link;
                 };
             };
             await Users.update(updateDataRow,{where: { id:req.session.user.id }});

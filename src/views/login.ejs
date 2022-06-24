@@ -24,6 +24,10 @@
                 <input type="submit" class="button" value="Entrar">
                 <a href="/users/register" class="button-off">Cadastrar-se</a>
             </form>
+            <a href="/users/forget">Esqueci minha senha</a>
+            <% if(err){ %>
+                <p> <%=err %> </p>
+            <% } %> 
         </div>
     </div>
 </body>
