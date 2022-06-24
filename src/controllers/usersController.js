@@ -1,4 +1,4 @@
-const { UploadImage }=require('../apis/imgur')
+const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
 const { sendEmail }=require('../utils/email')
@@ -64,7 +64,7 @@ class UserController{
             }
             const user=await Users.create(userDataInsert);
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
-                const { link }=await UploadImage(req.file)
+                const { link }=await uploadImage(req.file)
                 if(link){
                     user.img=link;
                     await user.save();
@@ -140,7 +140,7 @@ class UserController{
                 req.session.user.name=email;
             };
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
-                const { link }=await UploadImage(req.file)
+                const { link }=await uploadImage(req.file)
                 if(link){
                     updateDataRow.img=link;
                     req.session.user.img=link;

@@ -1,12 +1,11 @@
-const fs = require('fs');
 const FormData = require('form-data');
 const axios = require('axios').default;
 const clientId=process.env.IMGUR_CLIENT_ID;
 const imgurUploadURL='https://api.imgur.com/3/upload';
 module.exports={
-    UploadImage:async (file) =>{
+    uploadFromStream:async (stream) =>{
         const data = new FormData();
-        data.append('image',fs.createReadStream(file.path));
+        data.append('image',stream);
         const config = {
             method: 'post',
             url: imgurUploadURL,

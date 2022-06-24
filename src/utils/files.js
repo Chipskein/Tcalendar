@@ -22,5 +22,14 @@ module.exports={
         })
         return txt;
     },
-    email_templates_dir
+    deleteFile:(path)=>{
+        const fileExists=fs.existsSync(path);
+        if(fileExists) fs.unlinkSync(path);
+    },
+    createStream:(path)=>{
+        const stream=fs.createReadStream(path);
+        return stream
+    },
+    email_templates_dir,
+    default_tmp_dir
 }
