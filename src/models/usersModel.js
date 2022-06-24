@@ -36,4 +36,5 @@ const tableDefinition={
 }
 Users.init(tableDefinition,tableConfig);
 //Users.sync({force:true});
+
 module.exports = { Users };
