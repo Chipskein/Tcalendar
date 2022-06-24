@@ -7,5 +7,6 @@ router.post('/',upload.single('image'),UserController.register);
 router.post('/login',UserController.login);
 router.patch('/',UserController.update);
 router.get('/reset',UserController.resetPassword)
+router.get('/active',UserController.activeUser)
 
 module.exports=router;

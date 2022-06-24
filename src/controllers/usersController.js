@@ -33,5 +33,13 @@ class UserController{
 
         }
     }
+    static activeUser(req,res){
+        try{
+
+        }
+        catch(err){
+
+        }
+    }
 }
 module.exports=UserController;
