@@ -1,7 +1,7 @@
 const { UploadImage }=require('../apis/imgur')
 const { hashPassword,verifyPassword } =require('../utils/password');
-const { createJWT,getDataFromToken}= require('../utils/jwt');
 const { Users }=require('../models/usersModel');
+const { createJWT,getDataFromToken }=require('../utils/jwt');
 class UserController{
     static async register(req,res){
         try{
@@ -17,17 +17,16 @@ class UserController{
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await UploadImage(req.file)
                 if(link){
-                    await Users.update({ img: link }, {
-                        where: {id: user.id}
-                    });
                     user.img=link;
+                    await user.save();
                 };
             };
-            //redirect to confirm account
-            return res.status(200).json(user);
+            const data=user.toJSON
+            return res.status(200).json(data);
         }
         catch(err){
-            return res.status(500).json(err);
+            console.log(err);
+            return res.status(500).json(err.message);
         }
     }
     static async login(req,res){
@@ -39,6 +38,7 @@ class UserController{
             if(user.active==1){      
                 if(verifyPassword(password,user.password)){
                     delete(user.password);
+                    req.session.user=user;
                     //redirect to home
                     return res.status(200).json(user);
                 } else{
@@ -55,13 +55,14 @@ class UserController{
     }
     static async logoff(req,res){
         try{
-            return res.status(400).json('teste');
+            req.session.user={};
+            return res.redirect('/');
         }
         catch(err){
             return res.status(400).json(err.message);
         }
     }
-    static update(req,res){
+    static async update(req,res){
         try{
 
         }
@@ -69,7 +70,7 @@ class UserController{
 
         }
     }
-    static resetPassword(req,res){
+    static async resetPassword(req,res){
         try{
 
         }
@@ -77,12 +78,17 @@ class UserController{
 
         }
     }
-    static activeUser(req,res){
+    static async activeUser(req,res){
         try{
-
+            const { token }=req.query;
+            const { id } = getDataFromToken(token);
+            await Users.update({ active: true },{where: { id }});
+            let user=await Users.findAll({where: { id }})
+            user=user[0].dataValues
+            return res.status(200).json(user);
         }
         catch(err){
-
+            return res.status(400).json(err.message);
         }
     }
 }
