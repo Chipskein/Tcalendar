@@ -14,7 +14,12 @@ module.exports={
         return JWT_CONFIG
     },
     getInstance:()=>{
-        return {jwt,Sign};
+        return {
+                checkToken:jwt.verify,
+                genToken:jwt.sign,
+                key:Sign
+        };
+        
     }
 }
 

@@ -10,13 +10,13 @@ module.exports={
                 config=jwtConfig.configSessionJWTToken();
                 break;
         }
-        const { jwt,Sign }=jwtConfig.getInstance()
-        const token=jwt.verify(data,Sign,config);
+        const { genToken,key }=jwtConfig.getInstance()
+        const token=genToken(data,key,config);
         return token;
     },
     getDataFromToken:(token)=>{
-        const { jwt,Sign }=jwtConfig.getInstance();
-        const tokenData = jwt.verify(token,Sign);
+        const { checkToken,key }=jwtConfig.getInstance();
+        const tokenData = checkToken(token,key);
         return tokenData;
     }
 }
