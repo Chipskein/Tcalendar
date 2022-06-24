@@ -1,7 +1,9 @@
 const { UploadImage }=require('../apis/imgur')
+const { Users }=require('../models/usersModel');
 class UserController{
     static async register(req,res){
         try{
+            const {name,password,email} =req.body;
             //const { link }=await UploadImage(req.file)
             return res.status(200).json('Register User');
         }
