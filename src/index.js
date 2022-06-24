@@ -1,7 +1,11 @@
 require('dotenv').config();
 const express=require('express');
+const session=require('express-session');
+const sessionConfig=require('./config/express-session')
 const app=express();
 const port=process.env.PORT || 8080;
+
+app.use(session(sessionConfig))
 
 app.set('view engine','ejs');
 app.set('views','./src/views');

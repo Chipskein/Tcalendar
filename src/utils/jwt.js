@@ -10,6 +10,7 @@ module.exports={
                 config=jwtConfig.configSessionJWTToken();
                 break;
         }
+        data.token_type=type;
         const { genToken,key }=jwtConfig.getInstance()
         const token=genToken(data,key,config);
         return token;
