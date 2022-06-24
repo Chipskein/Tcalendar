@@ -9,7 +9,8 @@ class UserController{
         return res.render('register');
     }
     static async showHome(req,res){
-        return res.render('home');
+        const user=req.session.user;
+        return res.render('home',{user});
     }
     static async showLogin(req,res){
         return res.render('login');
@@ -20,7 +21,7 @@ class UserController{
             const { id } = getDataFromToken(token);
             let user=await Users.findAll({where: { id }})
             req.session.user=user;
-            return res.render('forgetPassword.ejs',{user});
+            return res.render('forgetPassword',{user});
         }
         catch(err){
             return res.status(400).json(err.message);
@@ -72,9 +73,9 @@ class UserController{
                 if(verifyPassword(password,user.password)){
                     delete(user.password);
                     req.session.user=user;
-                    return res.redirect('/home');
+                    return res.redirect('/users/home');
                 } else{
-                    return res.redirect('/login');
+                    return res.redirect('/users/login');
                 }
             } else{
                 //send mail
@@ -87,8 +88,8 @@ class UserController{
     }
     static async logoff(req,res){
         try{
-            req.session.user={};
-            return res.redirect('/login');
+            req.session.user=null;
+            return res.redirect('/users/login');
         }
         catch(err){
             return res.status(400).json(err.message);
@@ -116,7 +117,7 @@ class UserController{
                 };
             };
             await Users.update(updateDataRow,{where: { id:req.session.user.id }});
-            return res.redirect('/home');
+            return res.redirect('/users/home');
         }
         catch(err){
             return res.status(400).json(err.message);
@@ -129,7 +130,7 @@ class UserController{
             await Users.update({ active: true },{where: { id }});
             let user=await Users.findAll({where: { id }})
             req.session.user=user;
-            return res.redirect('/home');
+            return res.redirect('/users/home');
         }
         catch(err){
             return res.status(400).json(err.message);

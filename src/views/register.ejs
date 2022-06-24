@@ -7,6 +7,24 @@
     <title>TCalendar | Cadastro</title>
 </head>
 <body>
-    
+    <form action="/users/register" method="post" enctype="multipart/form-data">
+        
+        <label for="name">
+            <input type="text" name="name" placeholder="name" required>
+        </label>
+        
+        <label for="email">
+            <input type="email" name="email" placeholder="email" required>
+        </label>
+        
+        <label for="password">
+            <input type="password" name="password" placeholder="password" required>
+        </label>
+        
+        <label for="image">
+            <input type="file" name="image" placeholder="image">
+        </label>
+        <input type="submit" value="Cadastrar-se">
+    </form>
 </body>
 </html>

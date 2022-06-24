@@ -1,22 +1,23 @@
 const {Router} = require("express");
 const router=Router();
 const { upload }=require('../config/multer');
+const {isLogged,isNotLogged}=require('../utils/auth');
 const UserController = require("../controllers/usersController");
 
 //not logged
-router.get('/login',UserController.showLogin);
-router.get('/register',UserController.showRegister);
+router.get('/login',isNotLogged,UserController.showLogin);
+router.get('/register',isNotLogged,UserController.showRegister);
 
-router.post('/register',upload.single('image'),UserController.register);
-router.post('/login',UserController.login);
+router.post('/register',isNotLogged,upload.single('image'),UserController.register);
+router.post('/login',isNotLogged,UserController.login);
 
-router.get('/reset',UserController.showResetPasswordForm);
-router.get('/active',UserController.activeUser);
+router.get('/reset',isNotLogged,UserController.showResetPasswordForm);
+router.get('/active',isNotLogged,UserController.activeUser);
 
 //logged
-router.get('/home',UserController.showHome);
-router.get('/logoff',UserController.logoff);
-router.post('/update',upload.single('image'),UserController.update);
+router.get('/home',isLogged,UserController.showHome);
+router.get('/logoff',isLogged,UserController.logoff);
+router.post('/update',isLogged,upload.single('image'),UserController.update);
 
 
 module.exports=router;
