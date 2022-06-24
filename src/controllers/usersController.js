@@ -69,7 +69,7 @@ class UserController{
             let user=await Users.findAll({where: { email }});
             if(user.length==0) throw Error('Usuário não Encontrado')
             user=user[0].dataValues;      
-            if(user.active==1){      
+            if(user.active){      
                 if(verifyPassword(password,user.password)){
                     delete(user.password);
                     req.session.user=user;
@@ -78,7 +78,14 @@ class UserController{
                     return res.redirect('/users/login');
                 }
             } else{
-                //send mail
+                await sendEmail({
+                    email:user.email,
+                    server_url:req.protocol + '://' + req.get('host'),
+                    token:createJWT({id:user.id},'temp'),
+                    name:user.name,
+                    time:"",
+                    enterprise:""
+                });
                 return res.render('active_account',{user:data});
             }
         }
