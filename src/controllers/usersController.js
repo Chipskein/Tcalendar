@@ -1,6 +1,7 @@
 const { UploadImage }=require('../apis/imgur')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
+const { sendEmail }=require('../utils/email')
 const { createJWT,getDataFromToken }=require('../utils/jwt');
 class UserController{
 
@@ -45,7 +46,16 @@ class UserController{
                 };
             };
             const data=user.toJSON()
-            //send mail
+
+            await sendEmail({
+                email:data.email,
+                server_url:req.protocol + '://' + req.get('host'),
+                token:createJWT({id:data.id},'temp'),
+                name:data.name,
+                time:"",
+                enterprise:""
+            });
+
             return res.render('active_account',{user:data});
         }
         catch(err){
@@ -105,7 +115,7 @@ class UserController{
                     req.session.img=link;
                 };
             };
-            await Users.update(updateDataRow,{where: { id }});
+            await Users.update(updateDataRow,{where: { id:req.session.user.id }});
             return res.redirect('/home');
         }
         catch(err){

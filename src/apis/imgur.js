@@ -18,7 +18,6 @@ module.exports={
             data:data
         };
         const response=await axios.request(config);
-        fs.unlinkSync(file.path);
         return response.data.data
     },     
 }
