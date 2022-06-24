@@ -60,7 +60,6 @@ module.exports={
         return url
     },
     sendEmail:async (data)=>{
-        console.log(data);
         const {subject,html}=module.exports.prepareEmail('active_user',data,data.server_url);
         await module.exports.sendNodemailerMail(data.email,subject,html);
     }
