@@ -23,14 +23,6 @@ const tableDefinition={
         type:DataTypes.STRING,
         allowNull: false
     },
-    created_at:{
-        type:DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
-    updated_at:{
-        type:DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
     active:{
         type:DataTypes.BOOLEAN,
         defaultValue: false
