@@ -1,4 +1,3 @@
-const { Enterprise_users } = require("../models/enterprise_usersModel");
 module.exports={
     isLogged:async (req,res,next)=>{
         const session=req.session;
@@ -12,16 +11,14 @@ module.exports={
     },
     isNotInEnterPrise:async (req,res,next)=>{
         const { user }=req.session
-        const userEnterprise=await Enterprise_users.findAll({where:{id_user:user.id,active:true}});
-        const isUserInEnterprise= userEnterprise.length>0 ? true:false;
-        if(!isUserInEnterprise) next(); 
+        const { enterprise }=user;
+        if(!enterprise) next(); 
         else return res.redirect('/users/home');
     },
     isInEnterPrise:async (req,res,next)=>{
         const { user }=req.session
-        const userEnterprise=await Enterprise_users.findAll({where:{id_user:user.id,active:true}});
-        const isUserInEnterprise= userEnterprise.length>0 ? true:false;
-        if(isUserInEnterprise) next(); 
+        const { enterprise }=user;
+        if(enterprise) next(); 
         else return res.redirect('/users/home');
     },
     disableCache:(req,res,next)=>{
