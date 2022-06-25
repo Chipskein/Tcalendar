@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('./models/orm-setup');
 const express=require('express');
 const session=require('express-session');
 const sessionConfig=require('./config/express-session')

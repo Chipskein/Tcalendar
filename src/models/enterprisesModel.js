@@ -1,34 +1,34 @@
 const { DataTypes, Model } = require('sequelize');
-const { db } = require('../config/sequelize');
-const { Users }=require('./usersModel');
-class Enterprises extends Model {}
-const tableConfig={ 
-    sequelize: db, 
-    schema: 'public',
-    modelName: 'Enterprises'
+class Enterprises extends Model {
+    static init(sequelize){
+        const tableConfig={ 
+            sequelize, 
+            schema: 'public',
+            modelName: 'Enterprises'
+        }
+        const tableDefinition={
+            owner:{
+                type:DataTypes.INTEGER,
+                allowNull: false,
+            },
+            name:{
+                type:DataTypes.STRING,
+                allowNull: false
+            },
+            active:{
+                type:DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+        }
+        super.init(tableDefinition,tableConfig);
+    }
+    static associate(models) {
+        //create associations
+        this.belongsTo(models.Users,{ foreignKey: 'owner',as:'ownership'});
+        this.belongsToMany(models.Users, { foreignKey: 'id_enterprise', through: models.Enterprise_users, as: 'contratado' });
+        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
+        //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+    }
 }
-const tableDefinition={
-    id:{
-        type:DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    owner:{
-        type:DataTypes.INTEGER,
-        references: {
-            model: Users,      
-            key: 'id',
-          }
-    },
-    name:{
-        type:DataTypes.STRING,
-        allowNull: false
-    },
-    active:{
-        type:DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-}
-Enterprises.init(tableDefinition,tableConfig);
-//Enterprises.sync({force:true});
-module.exports = { Enterprises };
+
+module.exports = {Enterprises};
