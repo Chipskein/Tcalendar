@@ -17,6 +17,13 @@ module.exports={
         if(!isUserInEnterprise) next(); 
         else return res.redirect('/users/home');
     },
+    isInEnterPrise:async (req,res,next)=>{
+        const { user }=req.session
+        const userEnterprise=await Enterprise_users.findAll({where:{id_user:user.id,active:true}});
+        const isUserInEnterprise= userEnterprise.length>0 ? true:false;
+        if(isUserInEnterprise) next(); 
+        else return res.redirect('/users/home');
+    },
     disableCache:(req,res,next)=>{
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
         res.header('Expires', '-1');
