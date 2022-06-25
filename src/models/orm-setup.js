@@ -17,15 +17,15 @@ Teams_users.init(db);
 Teams_invite.init(db);
 Schedules.init(db);
 
-//Users.associate(db.models);
-//Enterprises.associate(db.models);
+Users.associate(db.models);
+Enterprises.associate(db.models);
 //Enterprise_users.associate(db.models);
-//Teams.associate(db.models);
+Teams.associate(db.models);
 //Teams_users.associate(db.models);
-//Teams_invite.associate(db.models);
+Teams_invite.associate(db.models);
 //Schedules.associate(db.models);
 
-(async ()=>await db.sync())();
-//(async ()=>await db.sync({force:true}))();
+//(async ()=>await db.sync())();
+(async ()=>await db.sync({force:true}))();
 
 

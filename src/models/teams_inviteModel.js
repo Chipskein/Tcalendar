@@ -9,11 +9,11 @@ class Teams_invite extends Model {
         const tableDefinition={
             id_user:{
                 type:DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
             },
             id_team:{
                 type:DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
             },
             status:{
                 type:DataTypes.STRING,
@@ -26,8 +26,8 @@ class Teams_invite extends Model {
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        this.hasMany(models.Users,{foreignKey:'id'});
-        this.hasMany(models.Teams,{foreignKey:'id'});
+        //this.hasMany(models.Users,{foreignKey:'id_team'});
+        //this.hasMany(models.Teams,{foreignKey:'id_team'});
     }
 }
 module.exports = { Teams_invite };

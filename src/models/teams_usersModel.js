@@ -23,8 +23,8 @@ class Teams_users extends Model {
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        this.hasMany(models.Users,{foreignKey:'id'});
-        this.hasMany(models.Teams,{foreignKey:'id'});
+        //this.hasMany(models.Users,{foreignKey:'id_user'});
+        //this.hasMany(models.Teams,{foreignKey:'id_team'});
     }
 }
 

@@ -33,12 +33,14 @@ class Users extends Model {
     }
     
     static associate(models) {
-        this.hasOne(models.Enterprises,{ foreignKey: 'owner',as:'ownership'});
-        this.hasOne(models.Teams,{ foreignKey: 'admin'});
-        this.hasOne(models.Schedules,{ foreignKey: 'id_user'})
-        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,as:"contratado"});
-        this.belongsTo(models.Teams_users, { foreignKey: 'id_user'});
-        this.belongsTo(models.Teams_invite, { foreignKey: 'id_user'});
+        this.hasOne(models.Teams,{ foreignKey: 'admin',foreignKeyConstraint:true});
+        this.hasOne(models.Enterprises,{ foreignKey: 'owner',foreignKeyConstraint:true});
+        this.hasOne(models.Schedules,{ foreignKey: 'id_user',foreignKeyConstraint:true})
+        
+        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,foreignKeyConstraint:true});
+        this.belongsToMany(models.Teams,{ foreignKey: 'id_user',foreignKeyConstraint:true,through:models.Teams_users})
+        this.hasOne(models.Teams_users, { foreignKey: 'id_user',foreignKeyConstraint:true});
+        this.hasOne(models.Teams_invite, { foreignKey: 'id_user',foreignKeyConstraint:true});
     }
 }
 

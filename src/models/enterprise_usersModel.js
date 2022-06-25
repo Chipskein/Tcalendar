@@ -26,8 +26,7 @@ class Enterprise_users extends Model {
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        this.hasMany(models.Enterprises,{foreignKey:'id'});
-        this.hasMany(models.Users,{foreignKey:'id'});
+
     }
 }
 module.exports = {Enterprise_users};
