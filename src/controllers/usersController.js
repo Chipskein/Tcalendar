@@ -1,8 +1,6 @@
 const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
-const { Enterprises }=require('../models/enterprisesModel');
-const { Enterprise_users }=require('../models/enterprise_usersModel');
 const { sendEmail }=require('../utils/email')
 const { createJWT,getDataFromToken }=require('../utils/jwt');
 class UserController{
