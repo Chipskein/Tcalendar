@@ -1,36 +1,33 @@
 const { DataTypes, Model } = require('sequelize');
-class Times_invite extends Model {
+class Teams_invite extends Model {
     static init(sequelize){
         const tableConfig={ 
             sequelize, 
             schema: 'public',
-            modelName: 'Times_invite'
+            modelName: 'Teams_invite'
         }
         const tableDefinition={
             id_user:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: 'Users',      
-                    key: 'id',
-                  }
+                allowNull: false
             },
-            id_time:{
+            id_team:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: 'Times',      
-                    key: 'id',
-                  }
+                allowNull: false
             },
             status:{
-                type:DataTypes.STRING
+                type:DataTypes.STRING,
+                defaultValue:"waiting"
+            },
+            response_date:{
+                type:DataTypes.DATE
             }
         }
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        //create associations
-        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
-        //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+        this.hasMany(models.Users,{foreignKey:'id'});
+        this.hasMany(models.Teams,{foreignKey:'id'});
     }
 }
-module.exports = Times_invite;
+module.exports = { Teams_invite };

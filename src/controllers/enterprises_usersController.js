@@ -1,5 +1,4 @@
 const { Users } = require("../models/usersModel");
-const { Enterprises } = require("../models/enterprisesModel");
 const { Enterprise_users } = require("../models/enterprise_usersModel");
 const { sendEmail }=require('../utils/email');
 class EnterpriseController{

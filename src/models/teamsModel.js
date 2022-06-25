@@ -1,27 +1,25 @@
 const { DataTypes, Model } = require('sequelize');
-class Times extends Model {
+class Teams extends Model {
     static init(sequelize){
         const tableConfig={ 
             sequelize, 
             schema: 'public',
-            modelName: 'Times'
+            modelName: 'Teams'
         }
         const tableDefinition={
             id_enterprise:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: 'Enterprises',      
-                    key: 'id',
-                  }
+                allowNull: false
             },
-            id_user:{
+            admin:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: 'Users',      
-                    key: 'id',
-                  }
+                allowNull: false
             },
             name:{
+                type:DataTypes.STRING,
+                allowNull: false
+            },
+            description:{
                 type:DataTypes.STRING,
                 allowNull: false
             },
@@ -33,9 +31,11 @@ class Times extends Model {
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        //create associations
-        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
-        //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+        this.belongsTo(models.Users,{foreignKey:'admin'});
+        this.belongsTo(models.Enterprises,{foreignKey:'id_enterprise'});
+        this.hasMany(models.Schedules,{ foreignKey: 'id_team'})
+        this.belongsTo(models.Teams_users,{ foreignKey: 'id_team'});
+        this.belongsTo(models.Teams_invite, { foreignKey: 'id_team'});
     }
 }
-module.exports={Times};
+module.exports={Teams};

@@ -9,21 +9,23 @@ const { Teams_users } = require("./teams_usersModel");
 const { Enterprise_users } = require("./enterprise_usersModel");
 
 
-Users.init(db)
-Enterprises.init(db)
-Enterprise_users.init(db)
+Users.init(db);
+Enterprises.init(db);
+Enterprise_users.init(db);
+Teams.init(db);
+Teams_users.init(db);
+Teams_invite.init(db);
+Schedules.init(db);
 
+//Users.associate(db.models);
+//Enterprises.associate(db.models);
+//Enterprise_users.associate(db.models);
+//Teams.associate(db.models);
+//Teams_users.associate(db.models);
+//Teams_invite.associate(db.models);
+//Schedules.associate(db.models);
 
-Users.associate(db.models);
-Enterprises.associate(db.models);
-Enterprise_users.associate(db.models);
-/*
-Teams.init(db)
-Schedules.init(db)
-Teams_invite.init(db)
-Teams_users.init(db)
-*/
-
-//(async ()=>await db.sync({force:true}))();
+//(async ()=>await db.sync())();
+(async ()=>await db.sync({force:true}))();
 
 

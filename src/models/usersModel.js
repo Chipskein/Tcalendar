@@ -34,10 +34,11 @@ class Users extends Model {
     
     static associate(models) {
         this.hasOne(models.Enterprises,{ foreignKey: 'owner',as:'ownership'});
+        this.hasOne(models.Teams,{ foreignKey: 'admin'});
+        this.hasOne(models.Schedules,{ foreignKey: 'id_user'})
         this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,as:"contratado"});
-        //create associations
-        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
-        //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+        this.belongsTo(models.Teams_users, { foreignKey: 'id_user'});
+        this.belongsTo(models.Teams_invite, { foreignKey: 'id_user'});
     }
 }
 

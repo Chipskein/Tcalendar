@@ -12,39 +12,28 @@ class Schedules extends Model {
                 autoIncrement: true,
                 primaryKey: true
             },
-            id_time:{
+            id_team:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: Times,      
-                    key: 'id',
-                }
+                allowNull:false
             },
             id_user:{
                 type:DataTypes.INTEGER,
-                references: {
-                    model: Users,      
-                    key: 'id',
-                }
+                allowNull:false
             },
-            
             date:{
                 type:DataTypes.DATE,
+                allowNull:false
             },
             duration:{
                 type:DataTypes.STRING,
-            },
-            hasEnded:{
-                type:DataTypes.BOOLEAN,
-                defaultValue: false
             },
         }
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        //create associations
-        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
-        //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+        this.belongsTo(models.Teams,{foreignKey:'id_team'})
+        this.belongsTo(models.Users,{foreignKey:'id_user'})
     }
 }
 
-module.exports = {Schedules};
+module.exports = { Schedules };

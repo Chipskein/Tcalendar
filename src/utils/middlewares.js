@@ -21,6 +21,12 @@ module.exports={
         if(enterprise) next(); 
         else return res.redirect('/users/home');
     },
+    isEnterpriseOwner:(req,res,next)=>{
+        const { user }=req.session
+        const { enterprise }=user;
+        if(enterprise.owner==user.id) next(); 
+        else return res.redirect('/users/home');
+    },
     disableCache:(req,res,next)=>{
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
         res.header('Expires', '-1');
