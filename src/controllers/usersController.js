@@ -13,9 +13,9 @@ class UserController{
     static async showHome(req,res){
         const user=req.session.user;
         let enterprise=false;
-        let userEnterprise=await Enterprise_users.findOne({where:{id_user:user.id,active:true},include:[Enterprises]});
-        if(userEnterprise){
-            enterprise=userEnterprise.dataValues.Enterprises[0].dataValues;
+        let { getUserEnterprise } =await Users.findOne({where:{ id:user.id },include:{association:"getUserEnterprise"}});
+        if(getUserEnterprise.length>0){
+            enterprise=getUserEnterprise[0].dataValues;
             req.session.user.enterprise=enterprise;
         }
 

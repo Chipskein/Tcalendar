@@ -37,7 +37,7 @@ class Users extends Model {
         this.hasOne(models.Enterprises,{ foreignKey: 'owner',foreignKeyConstraint:true});
         this.hasOne(models.Schedules,{ foreignKey: 'id_user',foreignKeyConstraint:true})
         
-        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,foreignKeyConstraint:true});
+        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,foreignKeyConstraint:true,as:"getUserEnterprise"});
         this.belongsToMany(models.Teams,{ foreignKey: 'id_user',foreignKeyConstraint:true,through:models.Teams_users})
         this.hasOne(models.Teams_users, { foreignKey: 'id_user',foreignKeyConstraint:true});
         this.hasOne(models.Teams_invite, { foreignKey: 'id_user',foreignKeyConstraint:true});

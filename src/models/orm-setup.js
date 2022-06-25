@@ -25,7 +25,7 @@ Teams.associate(db.models);
 Teams_invite.associate(db.models);
 //Schedules.associate(db.models);
 
-//(async ()=>await db.sync())();
-(async ()=>await db.sync({force:true}))();
+(async ()=>await db.sync())();
+//(async ()=>await db.sync({force:true}))();
 
 
