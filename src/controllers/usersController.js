@@ -137,7 +137,7 @@ class UserController{
             };
             if(email){
                 updateDataRow.email=email;
-                req.session.user.name=email;
+                req.session.user.email=email;
             };
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await uploadImage(req.file)
