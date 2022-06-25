@@ -34,7 +34,7 @@ class Users extends Model {
     
     static associate(models) {
         this.hasOne(models.Enterprises,{ foreignKey: 'owner',as:'ownership'});
-        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user', through: models.Enterprise_users, as: 'contratado' });
+        this.belongsToMany(models.Enterprises, { foreignKey: 'id_user',through: models.Enterprise_users,as:"contratado"});
         //create associations
         //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
         //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });

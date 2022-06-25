@@ -26,9 +26,11 @@ class Enterprise_users extends Model {
         super.init(tableDefinition,tableConfig);
     }
     static associate(models) {
-        
+        this.hasMany(models.Enterprises,{foreignKey:'id'});
+        this.hasMany(models.Users,{foreignKey:'id'});
         //create associations
-        //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
+        //this.hasMany(models.Enterprises);
+        //this.hasMany(models.Users);
         //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
     }
 }

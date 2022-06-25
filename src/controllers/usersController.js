@@ -13,15 +13,12 @@ class UserController{
     static async showHome(req,res){
         const user=req.session.user;
         let enterprise=false;
-        //colocar no model
-        const userEnterprise=await Enterprise_users.findAll({where:{id_user:user.id,active:true}});
-        const isUserInEnterprise= userEnterprise.length>0 ? true:false;
-        if(isUserInEnterprise){
-            let { id_enterprise } =userEnterprise[0].dataValues;
-            enterprise=await Enterprises.findAll({where:{id:id_enterprise}});
-            enterprise=enterprise[0].dataValues;
-            req.session.user.enterprise=id_enterprise;
+        let userEnterprise=await Enterprise_users.findOne({where:{id_user:user.id,active:true},include:[Enterprises]});
+        if(userEnterprise){
+            enterprise=userEnterprise.dataValues.Enterprises[0].dataValues;
+            req.session.user.enterprise=enterprise;
         }
+
         return res.render('home',{user,enterprise});
     }
     static async showLogin(req,res){
@@ -31,8 +28,8 @@ class UserController{
         try{
             const { token }=req.query;
             const { id } = getDataFromToken(token);
-            let user=await Users.findAll({where: { id }})
-            user=user[0].dataValues;  
+            let user=await Users.findByPk(id);
+            user=user.dataValues;  
             req.session.user=user;
             return res.render('forgetPassword',{user});
         }
@@ -46,9 +43,9 @@ class UserController{
     static async forgetMyPasswordForm(req,res){
         try{
             const { email }=req.body;
-            let user=await Users.findAll({where: { email }});
-            if(user.length==0) return res.render('showForgetPassword',{err:'Usuario nao existe'});   
-            user=user[0].dataValues;      
+            let user=await Users.findOne({where: { email }});
+            if(!user) return res.render('showForgetPassword',{err:'Usuario nao existe'});   
+            user=user.dataValues;      
             await sendEmail({
                 email:user.email,
                 server_url:req.protocol + '://' + req.get('host'),
@@ -101,9 +98,9 @@ class UserController{
     static async login(req,res){
         try{
             const { email,password }=req.body;
-            let user=await Users.findAll({where: { email }});
-            if(user.length==0) return res.render('login',{err:'Usuario nao existe'});   
-            user=user[0].dataValues;      
+            let user=await Users.findOne({where: { email }});
+            if(!user) return res.render('login',{err:'Usuario nao existe'});   
+            user=user.dataValues;      
             if(user.active){      
                 if(verifyPassword(password,user.password)){
                     delete(user.password);
@@ -170,8 +167,8 @@ class UserController{
             const { token }=req.query;
             const { id } = getDataFromToken(token);
             await Users.update({ active: true },{where: { id }});
-            let user=await Users.findAll({where: { id }})
-            user=user[0].dataValues; 
+            let user=await Users.findByPk(id);
+            user=user.dataValues; 
             req.session.user=user;
             return res.redirect('/users/home');
         }

@@ -25,7 +25,7 @@ class Enterprises extends Model {
     static associate(models) {
         //create associations
         this.belongsTo(models.Users,{ foreignKey: 'owner',as:'ownership'});
-        this.belongsToMany(models.Users, { foreignKey: 'id_enterprise', through: models.Enterprise_users, as: 'contratado' });
+        this.belongsToMany(models.Users, { foreignKey: 'id_enterprise', through: models.Enterprise_users, as:"contratado2"});
         //this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
         //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
     }

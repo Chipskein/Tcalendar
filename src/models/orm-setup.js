@@ -16,7 +16,7 @@ Enterprise_users.init(db)
 
 Users.associate(db.models);
 Enterprises.associate(db.models);
-
+Enterprise_users.associate(db.models);
 /*
 Teams.init(db)
 Schedules.init(db)
@@ -24,6 +24,6 @@ Teams_invite.init(db)
 Teams_users.init(db)
 */
 
-(async ()=>await db.sync(/*{force:true}*/))();
+//(async ()=>await db.sync({force:true}))();
 
 
