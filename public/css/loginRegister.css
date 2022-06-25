@@ -1,6 +1,19 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto';
+}
+
+a {
+    text-decoration: none;
+}
+
+a.white {
+    color: #fff;
+}
+
+a.black {
+    color: #000;
 }
 
 .main {
@@ -8,9 +21,9 @@ body {
     grid-template-areas: "head aside"
                          "body aside"
     ;
-    grid-template-columns: 70vw 30vw;
+    grid-template-columns: 80vw 20vw;
     grid-template-rows: 10vh 90vh;
-    background-image: url('../imgs/background-login.jpg');
+    background-image: url('../imgs/frontpage-background.png');
     background-position: center;
     background-size: cover;
 }
@@ -39,18 +52,20 @@ body {
     grid-area: body;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    margin-top: 15vh;
+    padding-right: 30vw;
+    padding-left: 10vw;
 }
 
 .maintxt {
     color: #fff;
-    font-size: 2em;
+    font-size: 3.5em;
     font-weight: bold;
 }
 
 .aside {
     grid-area: aside;
-    background-color: lightblue;
+    background-color: #79BCE7;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,29 +77,101 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 12vw;
 }
 
 .form-title {
-    font-weight: 800;
-    font-size: 1.1em;
+    font-weight: bolder;
+    font-size: 2em;
 }
 
 .input {
+    width: 100%;
     margin-top: 1vh;
+    margin-bottom: 1.5vh;
+    padding-left: 0.5vw;
+    padding-top: 0.7vw;
+    padding-right: 0.5vw;
+    padding-bottom: 0.7vw;
+    border: none;
+    border-radius: 5px;
 }
 
 .button, .button-off {
-    width: 10vw;
+    width: 13vw;
     height: 5vh;
     border: 1px solid #000;
     border-radius: 5px;
     text-align: center;
     align-items: center;
+    justify-content: center;
     margin-top: 1vh;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
 }
 
 .button {
     background-color: #000;
     border-radius: 5px;
     color: #fff;
+}
+
+.button-off {
+    border: 1px solid #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+}
+
+.button-white {
+    border-color: #fff;
+    margin-top: -2vh;
+    color: #fff;
+}
+
+.button-start {
+    transition: all ease 0.2s;
+}
+
+.button-start:hover {
+    background-color: #79BCE7;
+    border-color: transparent;
+}
+
+.forgotPwrd {
+    color: #000;
+    cursor: pointer;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    font-size: 0.8em;
+}
+
+.userimg-container {
+    background-color: #fff;
+    width: 6vw;
+    height: 6vw;
+    border-radius: 100px;
+    background-position: center;
+    background-size: cover;
+    background-image: url('/svgs/default-avatar.svg');
+}
+
+/* .userimg-container img {
+    width: 6vw;
+    height: 6vw;
+} */
+
+.input-image-label {
+    width: 80px;
+    /* color: var(--blueLink); */
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.input-image-input { 
+    display: none;
 }

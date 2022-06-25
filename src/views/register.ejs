@@ -5,29 +5,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCalendar | Cadastro</title>
+    <link rel="stylesheet" href="/css/loginRegister.css">
+    <%- include('includes/font') %>
 </head>
 <body>
-    <form action="/users/register" method="post" enctype="multipart/form-data">
-        
-        <label for="name">
-            <input type="text" name="name" placeholder="name" required>
-        </label>
-        
-        <label for="email">
-            <input type="email" name="email" placeholder="email" required>
-        </label>
-        
-        <label for="password">
-            <input type="password" name="password" placeholder="password" required>
-        </label>
-        
-        <label for="image">
-            <input type="file" name="image" placeholder="image">
-        </label>
-        <input type="submit" value="Cadastrar-se">
-    </form>
-    <% if(err){ %>
-        <p> <%=err %> </p>
-    <% } %> 
+    <div class="main">
+        <div class="head">
+            <img src="/svgs/logo.svg" class="logo" alt="" srcset="">
+            <p class="appname">TCalendar</p>
+        </div>
+        <div class="body">
+            <p class="maintxt">A agenda para organizar seu sucesso</p>
+            <div class="button-off button-white button-start">
+                <a href="/users/register" class="white">Comece agora</a>
+            </div>
+        </div>
+        <div class="aside">
+            <p class="form-title">Cadastrar</p>
+            <form action="/users/login" method="post" class="form">
+                <div id="userimg" class="userimg-container"></div>
+
+                <p>
+                    <label for="avatar" class="input-image-label">Clique Aqui</label>
+                    <input
+                        type="file"
+                        class="input-image-input"
+                        id="avatar"
+                        name="avatar"
+                        accept="image/png, image/jpeg"
+                        />
+                    e faça o upload.
+                </p>
+                <input type="text" class="input" name='name' placeholder="Nome" required>
+                <input type="email" class="input" name='email' placeholder="Email" required>
+                <input type="password" class="input" name='password' placeholder="Senha" required>
+                <input type="submit" class="button" value="Cadastrar">
+                <a href="/users/login" class="black">
+                    <div class="button-off">
+                        Login
+                    </div>
+                </a>
+            </form>
+            <% if(err){ %>
+                <p> <%=err %> </p>
+            <% } %> 
+        </div>
+    </div>
+    <script>
+        const avatar = document.getElementById("avatar");
+        avatar.onchange = evt => {
+            const [file] = avatar.files;
+            console.log('file ',file)
+            const img_perfil = document.getElementById("userimg");
+            if (file) {
+                img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
+            }
+            else{
+                img_perfil.style.backgroundImage="url(svgs/default-avatar.svg)"
+            }
+        }
+    </script>
 </body>
 </html>

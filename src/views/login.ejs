@@ -6,25 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCalendar | Login</title>
     <link rel="stylesheet" href="/css/loginRegister.css">
+    <%- include('includes/font') %>
 </head>
 <body>
     <div class="main">
         <div class="head">
-            <img src="/imgs/msn.png" class="logo" alt="" srcset="">
+            <img src="/svgs/logo.svg" class="logo" alt="" srcset="">
             <p class="appname">TCalendar</p>
         </div>
         <div class="body">
             <p class="maintxt">A agenda para organizar seu sucesso</p>
+            <div class="button-off button-white button-start">
+                <a href="/users/register" class="white">Comece agora</a>
+            </div>
         </div>
         <div class="aside">
             <p class="form-title">Login</p>
-            <form action="" method="post" class="form">
+            <form action="/users/login" method="post" class="form">
                 <input type="text" class="input" name='email' placeholder="Email" required>
                 <input type="password" class="input" name='password' placeholder="Senha" required>
                 <input type="submit" class="button" value="Entrar">
-                <a href="/users/register" class="button-off">Cadastrar-se</a>
+                <a href="/users/forget" class="forgotPwrd">Esqueci minha senha</a>
+                <div class="button-off">
+                    <a href="/users/register" class="black">Criar conta</a>
+                </div>
             </form>
-            <a href="/users/forget">Esqueci minha senha</a>
             <% if(err){ %>
                 <p> <%=err %> </p>
             <% } %> 
