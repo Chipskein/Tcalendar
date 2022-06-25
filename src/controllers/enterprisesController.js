@@ -17,7 +17,8 @@ class EnterpriseController{
         const { user }=req.session;
         let enterprise=await Enterprises.findAll({where:{owner:user.id,active:true}});
         enterprise=enterprise[0].dataValues;
-        return res.render('homeEnterprise',{user,enterprise});
+        let owner= (user.id==enterprise.owner) ? true:false; 
+        return res.render('homeEnterprise',{user,enterprise,owner});
     }
 }
 module.exports=EnterpriseController;

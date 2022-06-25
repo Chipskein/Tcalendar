@@ -9,7 +9,14 @@
     <%- include('includes/font') %>
 </head>
 <body>
-    adicionar usuario na empresa
-    
+    <%  if(owner){ %>
+        adicionar usuario na empresa
+        <form action="/enterprises_users/" method="post">
+            <input type="email" name="email" placeholder="Email do usuario" required>
+            <input type="submit" value="Adicionar usuario">
+        </form>
+    <% } else{ %>
+        mostrar times
+    <% }  %>
 </body>
 </html>
