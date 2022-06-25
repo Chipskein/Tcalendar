@@ -39,6 +39,11 @@ module.exports={
                 subject="Tcalendar | Notificação Reunião Marcada";
                 values=[{type:"user_name",value:data.name},{type:"user_time",value:data.time},{type:"user_enterprise",value:data.enterprise}];
                 break;
+            case "notification_enterprise":
+                template='notification_enterprise';
+                subject=`Tcalendar | Você foi adicionado a empresa ${data.enterprise}`;
+                values=[{type:"user_name",value:data.name},{type:"user_enterprise",value:data.enterprise}];
+                break;
         }
         let html=readFile(`${email_templates_dir}/${template}.html`);
         html=replaceValuesFromTxt(html,values)

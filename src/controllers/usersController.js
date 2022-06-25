@@ -20,6 +20,7 @@ class UserController{
             let { id_enterprise } =userEnterprise[0].dataValues;
             enterprise=await Enterprises.findAll({where:{id:id_enterprise}});
             enterprise=enterprise[0].dataValues;
+            req.session.user.enterprise=id_enterprise;
         }
         return res.render('home',{user,enterprise});
     }
