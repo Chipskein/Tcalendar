@@ -109,7 +109,7 @@ class UserController{
                     time:"",
                     enterprise:""
                 });
-                return res.render('active_account',{user:data});
+                return res.render('active_account',{user:user});
             }
         }
         catch(err){
