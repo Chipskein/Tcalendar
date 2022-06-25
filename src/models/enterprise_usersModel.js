@@ -1,5 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { db } = require('../config/sequelize');
+const { Enterprises } =require('./enterprisesModel')
+const { Users } =require('./usersModel')
 class Enterprise_users extends Model {}
 const tableConfig={ 
     sequelize: db, 
@@ -8,7 +10,7 @@ const tableConfig={
 }
 const tableDefinition={
     id_enterprise:{
-        type:DataTypes.STRING,
+        type:DataTypes.INTEGER,
         allowNull: false,
         unique:'compositeIndex',
         references: {
@@ -17,7 +19,7 @@ const tableDefinition={
         }
     },
     id_user:{
-        type:DataTypes.STRING,
+        type:DataTypes.INTEGER,
         allowNull: false,
         unique:'compositeIndex',
         references: {
@@ -27,9 +29,9 @@ const tableDefinition={
     },
     active:{
         type:DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: true
     },
 }
 Enterprise_users.init(tableDefinition,tableConfig);
-Enterprise_users.sync();
+//Enterprise_users.sync({force:true});
 module.exports = { Enterprise_users };

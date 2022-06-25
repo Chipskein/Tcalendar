@@ -1,6 +1,8 @@
 const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
+const { Enterprises }=require('../models/enterprisesModel');
+const { Enterprise_users }=require('../models/enterprise_usersModel');
 const { sendEmail }=require('../utils/email')
 const { createJWT,getDataFromToken }=require('../utils/jwt');
 class UserController{
@@ -10,7 +12,16 @@ class UserController{
     }
     static async showHome(req,res){
         const user=req.session.user;
-        return res.render('home',{user});
+        let enterprise=false;
+        //colocar no model
+        const userEnterprise=await Enterprise_users.findAll({where:{id_user:user.id,active:true}});
+        const isUserInEnterprise= userEnterprise.length>0 ? true:false;
+        if(isUserInEnterprise){
+            let { id_enterprise } =userEnterprise[0].dataValues;
+            enterprise=await Enterprises.findAll({where:{id:id_enterprise}});
+            enterprise=enterprise[0].dataValues;
+        }
+        return res.render('home',{user,enterprise});
     }
     static async showLogin(req,res){
         return res.render('login',{err:false});
@@ -159,6 +170,7 @@ class UserController{
             const { id } = getDataFromToken(token);
             await Users.update({ active: true },{where: { id }});
             let user=await Users.findAll({where: { id }})
+            user=user[0].dataValues; 
             req.session.user=user;
             return res.redirect('/users/home');
         }

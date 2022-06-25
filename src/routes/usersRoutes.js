@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const router=Router();
 const { upload }=require('../config/multer');
-const {isLogged,isNotLogged}=require('../utils/auth');
+const {isLogged,isNotLogged}=require('../utils/middlewares');
 const UserController = require("../controllers/usersController");
 
 //not logged

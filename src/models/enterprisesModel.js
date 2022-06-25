@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const { db } = require('../config/sequelize');
+const { Users }=require('./usersModel');
 class Enterprises extends Model {}
 const tableConfig={ 
     sequelize: db, 
@@ -25,9 +26,9 @@ const tableDefinition={
     },
     active:{
         type:DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: true
     },
 }
 Enterprises.init(tableDefinition,tableConfig);
-Enterprises.sync();
+//Enterprises.sync({force:true});
 module.exports = { Enterprises };

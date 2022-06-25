@@ -10,5 +10,11 @@
 </head>
 <body>
     <a href="/users/logoff">sair</a>
+    <% if(enterprise){ %> 
+        <p>Bem vindo <%=user.name%> da empresa <%= enterprise.name%> </p>
+    <% } else{ %>
+        <p>Você não esta ou é dono de nenhuma empresa</p>
+        <a href="/enterprises/">Deseja criar uma empresa ?</a>
+    <% } %>
 </body>
 </html>
