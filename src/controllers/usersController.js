@@ -9,12 +9,12 @@ class UserController{
         return res.render('register',{err:false});
     }
     static async showHome(req,res){
-        const user=req.session.user;
+        const user=req.user;
         let enterprise=false;
         let { getUserEnterprise } =await Users.findOne({where:{ id:user.id },include:{association:"getUserEnterprise"}});
         if(getUserEnterprise.length>0){
             enterprise=getUserEnterprise[0].dataValues;
-            req.session.user.enterprise=enterprise;
+            req.user.enterprise=enterprise;
         }
 
         return res.render('home',{user,enterprise});
@@ -28,7 +28,9 @@ class UserController{
             const { id } = getDataFromToken(token);
             let user=await Users.findByPk(id);
             user=user.dataValues;  
-            req.session.user=user;
+            req.user=user;
+            const session_token=createJWT(user,'session');
+            res.cookie('token',session_token);
             return res.render('forgetPassword',{user});
         }
         catch(err){
@@ -102,7 +104,8 @@ class UserController{
             if(user.active){      
                 if(verifyPassword(password,user.password)){
                     delete(user.password);
-                    req.session.user=user;
+                    const token=createJWT(user,'session');
+                    res.cookie('token', token);
                     return res.redirect('/users/home');
                 } else{
                     return res.render('login',{err:'Credenciais invalidas'});   
@@ -125,7 +128,8 @@ class UserController{
     }
     static async logoff(req,res){
         try{
-            req.session.user=null;
+            req.user=null;
+            res.cookie('token','');
             return res.redirect('/users/login');
         }
         catch(err){
@@ -140,20 +144,20 @@ class UserController{
             if(password) updateDataRow.password=hashPassword(password);
             if(name){
                 updateDataRow.name=name;
-                req.session.user.name=name;
+                req.user.name=name;
             };
             if(email){
                 updateDataRow.email=email;
-                req.session.user.email=email;
+                req.user.email=email;
             };
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await uploadImage(req.file)
                 if(link){
                     updateDataRow.img=link;
-                    req.session.user.img=link;
+                    req.user.img=link;
                 };
             };
-            await Users.update(updateDataRow,{where: { id:req.session.user.id }});
+            await Users.update(updateDataRow,{where: { id:req.user.id }});
             return res.redirect('/users/home');
         }
         catch(err){
@@ -167,7 +171,9 @@ class UserController{
             await Users.update({ active: true },{where: { id }});
             let user=await Users.findByPk(id);
             user=user.dataValues; 
-            req.session.user=user;
+            const session_token=createJWT(user,'session');
+            res.cookie('token',session_token);
+            req.user=user;
             return res.redirect('/users/home');
         }
         catch(err){

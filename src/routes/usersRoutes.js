@@ -1,25 +1,25 @@
 const {Router} = require("express");
 const router=Router();
 const { upload }=require('../config/multer');
-const {isLogged,isNotLogged}=require('../utils/middlewares');
+const {isLogged,isNotLogged,verifyToken,verifyHasNoToken}=require('../utils/middlewares');
 const UserController = require("../controllers/usersController");
 
 //not logged
-router.get('/login',isNotLogged,UserController.showLogin);
-router.get('/register',isNotLogged,UserController.showRegister);
+router.get('/login',verifyHasNoToken,isNotLogged,UserController.showLogin);
+router.get('/register',verifyHasNoToken,isNotLogged,UserController.showRegister);
 
-router.post('/register',isNotLogged,upload.single('image'),UserController.register);
-router.post('/login',isNotLogged,UserController.login);
+router.post('/register',verifyHasNoToken,isNotLogged,upload.single('image'),UserController.register);
+router.post('/login',verifyHasNoToken,isNotLogged,UserController.login);
 
-router.get('/forget',isNotLogged,UserController.showForgetMyPasswordForm);
-router.post('/forget',isNotLogged,UserController.forgetMyPasswordForm);
-router.get('/resetpassword',isNotLogged,UserController.showResetPasswordForm);
-router.get('/active',isNotLogged,UserController.activeUser);
+router.get('/forget',verifyHasNoToken,isNotLogged,UserController.showForgetMyPasswordForm);
+router.post('/forget',verifyHasNoToken,isNotLogged,UserController.forgetMyPasswordForm);
+router.get('/resetpassword',verifyHasNoToken,isNotLogged,UserController.showResetPasswordForm);
+router.get('/active',verifyHasNoToken,isNotLogged,UserController.activeUser);
 
 //logged
-router.get('/home',isLogged,UserController.showHome);
-router.get('/logoff',isLogged,UserController.logoff);
-router.post('/update',isLogged,upload.single('image'),UserController.update);
+router.get('/home',verifyToken,isLogged,UserController.showHome);
+router.get('/logoff',verifyToken,isLogged,UserController.logoff);
+router.post('/update',verifyToken,isLogged,upload.single('image'),UserController.update);
 
 
 module.exports=router;

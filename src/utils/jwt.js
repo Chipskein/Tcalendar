@@ -19,5 +19,10 @@ module.exports={
         const { checkToken,key }=jwtConfig.getInstance();
         const tokenData = checkToken(token,key);
         return tokenData;
-    }
+    },
+    getCookie:(cookie,cookietoken)=>{
+        const cookiestring=RegExp(cookietoken+"=[^;]+").exec(cookie);
+        return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+    },
+         
 }
