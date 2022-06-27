@@ -2,7 +2,7 @@ const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
 const { sendEmail }=require('../utils/email')
-const { createJWT,getDataFromToken }=require('../utils/jwt');
+const { createJWT,getDataFromToken,prepareSessionToken, prepareTempToken }=require('../utils/jwt');
 class UserController{
 
     static async showRegister(req,res){
@@ -10,13 +10,7 @@ class UserController{
     }
     static async showHome(req,res){
         const user=req.user;
-        let enterprise=false;
-        let { getUserEnterprise } =await Users.findOne({where:{ id:user.id },include:{association:"getUserEnterprise"}});
-        if(getUserEnterprise.length>0){
-            enterprise=getUserEnterprise[0].dataValues;
-            req.user.enterprise=enterprise;
-        }
-
+        const { enterprise }=user;
         return res.render('home',{user,enterprise});
     }
     static async showLogin(req,res){
@@ -24,12 +18,9 @@ class UserController{
     }
     static async showResetPasswordForm(req,res){
         try{
-            const { token }=req.query;
-            const { id } = getDataFromToken(token);
-            let user=await Users.findByPk(id);
-            user=user.dataValues;  
-            req.user=user;
-            const session_token=createJWT(user,'session');
+            const temp_token=req.query.token;
+            const user = getDataFromtemp_token(temp_token);
+            const session_token=await prepareSessionToken(Users,user.id);
             res.cookie('token',session_token);
             return res.render('forgetPassword',{user});
         }
@@ -45,11 +36,11 @@ class UserController{
             const { email }=req.body;
             let user=await Users.findOne({where: { email }});
             if(!user) return res.render('showForgetPassword',{err:'Usuario nao existe'});   
-            user=user.dataValues;      
+            user=user.dataValues;   
             await sendEmail({
                 email:user.email,
                 server_url:req.protocol + '://' + req.get('host'),
-                token:createJWT({id:user.id},'temp'),
+                token:await prepareTempToken(user),
                 name:user.name,
                 time:"",
                 enterprise:""
@@ -100,11 +91,10 @@ class UserController{
             const { email,password }=req.body;
             let user=await Users.findOne({where: { email }});
             if(!user) return res.render('login',{err:'Usuario nao existe'});   
-            user=user.dataValues;      
+            user=user.dataValues;  
             if(user.active){      
                 if(verifyPassword(password,user.password)){
-                    delete(user.password);
-                    const token=createJWT(user,'session');
+                    const token=await prepareSessionToken(Users,user.id);
                     res.cookie('token', token);
                     return res.redirect('/users/home');
                 } else{
@@ -166,14 +156,11 @@ class UserController{
     }
     static async activeUser(req,res){
         try{
-            const { token }=req.query;
-            const { id } = getDataFromToken(token);
+            const temp_token =req.query.token;
+            const { id } = getDataFromToken(temp_token);
             await Users.update({ active: true },{where: { id }});
-            let user=await Users.findByPk(id);
-            user=user.dataValues; 
-            const session_token=createJWT(user,'session');
+            const session_token=prepareSessionToken(Users,id);
             res.cookie('token',session_token);
-            req.user=user;
             return res.redirect('/users/home');
         }
         catch(err){
