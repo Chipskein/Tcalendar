@@ -9,7 +9,7 @@ class UserController{
         return res.render('register',{err:false});
     }
     static async showHome(req,res){
-        const user=req.user;
+        const { user }=req.data;
         const { enterprise }=user;
         return res.render('home',{user,enterprise});
     }
@@ -20,7 +20,7 @@ class UserController{
         try{
             const temp_token=req.query.token;
             const user = getDataFromToken(temp_token);
-            const session_token=await prepareSessionToken(Users,user.id);
+            const session_token=await prepareSessionToken(user.id,user.email);
             res.cookie('token',session_token);
             return res.render('forgetPassword',{user});
         }
@@ -40,7 +40,7 @@ class UserController{
             await sendEmail({
                 email:user.email,
                 server_url:req.protocol + '://' + req.get('host'),
-                token:await prepareTempToken(user),
+                token:await prepareTempToken(user.id,user.email),
                 name:user.name,
                 time:"",
                 enterprise:""
@@ -94,7 +94,7 @@ class UserController{
             user=user.dataValues;  
             if(user.active){      
                 if(verifyPassword(password,user.password)){
-                    const token=await prepareSessionToken(Users,user.id);
+                    const token=await prepareSessionToken(user.id,user.email);
                     res.cookie('token', token);
                     return res.redirect('/users/home');
                 } else{
@@ -104,7 +104,7 @@ class UserController{
                 await sendEmail({
                     email:user.email,
                     server_url:req.protocol + '://' + req.get('host'),
-                    token:createJWT({id:user.id},'temp'),
+                    token:await prepareTempToken(user.id,user.email),
                     name:user.name,
                     time:"",
                     enterprise:""
@@ -118,7 +118,7 @@ class UserController{
     }
     static async logoff(req,res){
         try{
-            req.user=null;
+            req.data=null;
             res.cookie('token','');
             return res.redirect('/users/login');
         }
@@ -134,20 +134,20 @@ class UserController{
             if(password) updateDataRow.password=hashPassword(password);
             if(name){
                 updateDataRow.name=name;
-                req.user.name=name;
+                req.data.name=name;
             };
             if(email){
                 updateDataRow.email=email;
-                req.user.email=email;
+                req.data.email=email;
             };
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await uploadImage(req.file)
                 if(link){
                     updateDataRow.img=link;
-                    req.user.img=link;
+                    req.data.img=link;
                 };
             };
-            await Users.update(updateDataRow,{where: { id:req.user.id }});
+            await Users.update(updateDataRow,{where: { id:req.data.id }});
             return res.redirect('/users/home');
         }
         catch(err){
@@ -157,9 +157,9 @@ class UserController{
     static async activeUser(req,res){
         try{
             const temp_token =req.query.token;
-            const { id } = getDataFromToken(temp_token);
+            const { id,email } = getDataFromToken(temp_token);
             await Users.update({ active: true },{where: { id }});
-            const session_token=prepareSessionToken(Users,id);
+            const session_token=prepareSessionToken(id,email);
             res.cookie('token',session_token);
             return res.redirect('/users/home');
         }

@@ -1,4 +1,4 @@
-const { getDataFromToken,getCookie} = require("./jwt");
+const { getCookie, getUserInfoByToken} = require("./jwt");
 
 module.exports={
 
@@ -6,9 +6,9 @@ module.exports={
         const cookie = req.headers.cookie;
         const token = getCookie(cookie,'token');
         if (cookie==null||token == '') return res.redirect('/users/login');
-        const user=getDataFromToken(token)
-        if(user.token_type=='session'){
-            req.user=user;
+        const userInfo=await getUserInfoByToken(token);
+        if(userInfo.token_type=='session'){
+            req.data=userInfo;
             next();
         } else {
             res.cookie('token','');
@@ -23,41 +23,44 @@ module.exports={
     },
 
     isLogged:async (req,res,next)=>{
-        const { user }=req;
-        if(user!=null){
-            req.user=user;
+        const { data }=req;
+        if(data!=null){
+            req.data=data;
             next()
         }
         else return res.redirect('/users/login');
     },
     isNotLogged:(req,res,next)=>{
-        const { user }=req;
-        if(user==null) next();
+        const { data }=req;
+        if(data==null) next();
         else return res.redirect('/users/home');
     },
     isNotInEnterPrise:async (req,res,next)=>{
-        const { user }=req
+        const { data }=req;
+        const { user }=data;
         const { enterprise }=user;
         if(!enterprise){
-            req.user=user;
+            req.data=data;
             next();
         }
         else return res.redirect('/users/home');
     },
     isInEnterPrise:async (req,res,next)=>{
-        const { user }=req
+        const { data }=req;
+        const { user }=data;
         const { enterprise }=user;
         if(enterprise){
-            req.user=user;
+            req.data=data;
             next();
         }
         else return res.redirect('/users/home');
     },
     isEnterpriseOwner:(req,res,next)=>{
-        const { user }=req
+        const { data }=req;
+        const { user }=data;
         const { enterprise }=user;
         if(enterprise.owner==user.id){
-            req.user=user;
+            req.data=data;
             next();
         }
         else return res.redirect('/users/home');
