@@ -19,7 +19,7 @@ class UserController{
     static async showResetPasswordForm(req,res){
         try{
             const temp_token=req.query.token;
-            const user = getDataFromtemp_token(temp_token);
+            const user = getDataFromToken(temp_token);
             const session_token=await prepareSessionToken(Users,user.id);
             res.cookie('token',session_token);
             return res.render('forgetPassword',{user});
