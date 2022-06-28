@@ -132,22 +132,13 @@ class UserController{
             let {name,email,password} =req.body
             const file=req.file;
             if(password) updateDataRow.password=hashPassword(password);
-            if(name){
-                updateDataRow.name=name;
-                req.data.name=name;
-            };
-            if(email){
-                updateDataRow.email=email;
-                req.data.email=email;
-            };
+            if(name) updateDataRow.name=name;
+            if(email) updateDataRow.email=email;
             if(file&&(file.mimetype=='image/jpeg'||file.mimetype=='image/gif'||file.mimetype=='image/png')){
                 const { link }=await uploadImage(req.file)
-                if(link){
-                    updateDataRow.img=link;
-                    req.data.img=link;
-                };
+                if(link) updateDataRow.img=link;
             };
-            await Users.update(updateDataRow,{where: { id:req.data.id }});
+            await Users.update(updateDataRow,{where: { id:req.data.user.id }});
             return res.redirect('/users/home');
         }
         catch(err){
