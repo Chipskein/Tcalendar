@@ -5,7 +5,7 @@ class EnterpriseController{
     static async addUser(req,res){
         try{
             const { email }=req.body;
-            const { user }=req.session;
+            const { user }=req.data;
             const { enterprise } =user;
             let userToAdd=await Users.findOne({where:{email}});
             if(!userToAdd) throw new Error('Usuario nao encontrado');

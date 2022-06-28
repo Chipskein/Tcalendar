@@ -35,17 +35,19 @@ module.exports={
         if(data==null) next();
         else return res.redirect('/users/home');
     },
-    isNotInEnterPrise:async (req,res,next)=>{
+    isNotInEnterprise:async (req,res,next)=>{
         const { data }=req;
         const { user }=data;
         const { enterprise }=user;
-        if(!enterprise){
-            req.data=data;
-            next();
-        }
-        else return res.redirect('/users/home');
+        console.log(data);
+        next();
+        //if(!enterprise){
+          //  req.data=data;
+        //    next();
+        //}
+        //else return res.redirect('/users/home');
     },
-    isInEnterPrise:async (req,res,next)=>{
+    isInEnterprise:async (req,res,next)=>{
         const { data }=req;
         const { user }=data;
         const { enterprise }=user;

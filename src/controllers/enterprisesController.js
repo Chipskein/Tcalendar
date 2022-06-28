@@ -5,7 +5,7 @@ class EnterpriseController{
         return res.render('createEnterprise',{});
     }
     static async createEnterprise(req,res){
-        const user=req.session.user;
+        const user=req.data.user;
         const { name } =req.body;   
         const EnterpriseDataRow={name,owner:user.id};
         const enterprise=await Enterprises.create(EnterpriseDataRow);
@@ -14,7 +14,7 @@ class EnterpriseController{
         return res.redirect('/enterprises/home');
     }
     static async showHome(req,res){
-        const { user }=req.session;
+        const { user }=req.data;
         const { enterprise }=user;
         let owner= (user.id==enterprise.owner) ? true:false; 
         return res.render('homeEnterprise',{user,enterprise,owner});
