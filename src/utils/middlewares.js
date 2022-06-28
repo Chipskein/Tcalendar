@@ -39,13 +39,11 @@ module.exports={
         const { data }=req;
         const { user }=data;
         const { enterprise }=user;
-        console.log(data);
-        next();
-        //if(!enterprise){
-          //  req.data=data;
-        //    next();
-        //}
-        //else return res.redirect('/users/home');
+        if(!enterprise){
+            req.data=data;
+            next();
+        }
+        else return res.redirect('/users/home');
     },
     isInEnterprise:async (req,res,next)=>{
         const { data }=req;

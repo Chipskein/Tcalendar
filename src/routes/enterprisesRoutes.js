@@ -1,9 +1,9 @@
 const {Router} = require("express");
 const EnterpriseController = require("../controllers/enterprisesController");
-const { isLogged ,isNotInEnterprise,isInEnterprise}=require('../utils/middlewares');
+const { isLogged ,isNotInEnterprise,isInEnterprise,verifyToken}=require('../utils/middlewares');
 const router=Router();
-router.get('/',isLogged,isNotInEnterprise,EnterpriseController.showCreateForm);
-router.post('/',isLogged,isNotInEnterprise,EnterpriseController.createEnterprise);
+router.get('/',verifyToken,isLogged,isNotInEnterprise,EnterpriseController.showCreateForm);
+router.post('/',verifyToken,isLogged,isNotInEnterprise,EnterpriseController.createEnterprise);
 
-router.get('/home',isLogged,isInEnterprise,EnterpriseController.showHome);
+router.get('/home',verifyToken,isLogged,isInEnterprise,EnterpriseController.showHome);
 module.exports=router;
