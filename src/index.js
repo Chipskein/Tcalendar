@@ -14,19 +14,13 @@ app.use(express.static('public'));
 //routes
 const enterprisesRoutes=require('./routes/enterprisesRoutes.js');
 const schedulesRoutes=require('./routes/schedulesRoutes.js');
-const timesRoutes=require('./routes/timesRoutes.js');
+const teamsRoutes=require('./routes/teamsRoutes.js');
 const usersRoutes=require('./routes/usersRoutes.js');
-const enterprise_usersRoutes=require('./routes/enterprise_usersRoutes.js');
-const times_inviteRoutes=require('./routes/times_inviteRoutes.js');
-const times_usersRoutes=require('./routes/times_usersRoutes.js');
 
 app.use('/enterprises',enterprisesRoutes);
 app.use('/schedules',schedulesRoutes);
-app.use('/times',timesRoutes);
+app.use('/teams',teamsRoutes);
 app.use('/users',usersRoutes);
-app.use('/enterprise_users',enterprise_usersRoutes);
-app.use('/times_invite',times_inviteRoutes);
-app.use('/times_users',times_usersRoutes);
 
 app.use('*',(req,res)=>{
     return res.redirect('/users/home');
