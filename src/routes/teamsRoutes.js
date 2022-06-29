@@ -1,4 +1,8 @@
 const {Router} = require("express");
 const router=Router();
-router.get('/',(req,res)=>{return res.send('TESTANDo')});
+const TeamsController = require("../controllers/teamsController");
+const {verifyToken,isInEnterprise}=require('../utils/middlewares');
+
+router.post('/',verifyToken,isInEnterprise,TeamsController.createTeam);
+
 module.exports=router;
