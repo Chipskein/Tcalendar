@@ -1,0 +1,58 @@
+.title {
+    font-size: 28px;
+    font-weight: bold;
+}
+.main {
+    display: grid;
+    grid-template-areas: "body aside"
+                         "body aside"
+    ;
+    grid-template-columns: 85vw 15vw;
+    grid-template-rows: 10vh 90vh;
+}
+.aside {
+    grid-area: aside;
+    background-color: #191919;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.body {
+    grid-area: body;
+    margin: 50px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px;
+}
+.Tcalendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.TcalendarText {
+    color: #AEE8E0;
+    font-size: 24px;
+}
+.lines {
+    margin: 15px 0px 15px 0px;
+    border: 1px solid #4F545C;
+    width: 100%;
+    border-right: none;
+    border-left: none;
+}
+.profile {
+    background-color: #292B2F;
+    position:absolute;
+    padding: 40px 0px 40px 0px;
+    bottom: 0px;
+    /* width: 280px; */
+}

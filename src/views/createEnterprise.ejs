@@ -4,14 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tcalendar | Create Enterprise</title>
+    <title>TCalendar | Login</title>
+    <link rel="stylesheet" href="/css/loginRegister.css">
     <%- include('includes/icon') %>
     <%- include('includes/font') %>
 </head>
 <body>
-    <form action="/enterprises" method="post">
-        <input type="text" name="name" placeholder="Nome da Empresa">
-        <input type="submit" value="Criar empresa">
-    </form>
+    <div class="main">
+        <div class="head">
+            <img src="/svgs/logo.svg" class="logo" alt="" srcset="">
+            <p class="appname">TCalendar</p>
+        </div>
+        <div class="body">
+            <p class="maintxt">A agenda para organizar seu sucesso</p>
+            <div class="button-off button-white button-start">
+                <a href="/users/register" class="white">Comece agora</a>
+            </div>
+        </div>
+        <div class="aside">
+            <p class="form-title">Crie uma empresa</p>
+            <form action="/enterprises" method="post" class="form">
+                <input type="text" class="input" name='name' placeholder="Nome da Empresa" required>
+                <input type="submit" class="button" value="Criar empresa">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -9,7 +9,7 @@ module.exports={
     },
     configTempJWTToken:(data)=>{
         const JWT_CONFIG={
-            expiresIn: '1h'
+            expiresIn: '4h'
         }
         return JWT_CONFIG
     },
