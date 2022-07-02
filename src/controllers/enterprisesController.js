@@ -1,20 +1,55 @@
 const { Users } = require("../models/usersModel");
-const { Teams } =require('../models/teamsModel');
-const { Teams_invite } =require('../models/teams_inviteModel');
-const { Teams_users }= require('../models/teams_usersModel');
-class TeamsController{
-    static async createTeam(req,res,next){
-        //create team
-        const { user }=req.data
-        const { name,description } = req.body;
-        return res.send('porra');
+const { Enterprises } = require("../models/enterprisesModel");
+const { Enterprise_users } = require("../models/enterprise_usersModel");
+class EnterpriseController{
+    static showCreateForm(req,res){
+        return res.render('createEnterprise',{});
     }
-    static async addUserToTeam(req,res,next){
-        //verify invite
+    static async showHome(req,res){
+        const { user }=req.data;
+        const { enterprise }=user;
+        let owner= (user.id==enterprise.owner) ? true:false; 
+        return res.render('homeEnterprise',{user,enterprise,owner});
     }
-    static async inviteUserToTeam(req,res,next){
-        // if user exists send invite
-        //else send special invite by email
+    static async createEnterprise(req,res){
+        const user=req.data.user;
+        const { name } =req.body;   
+        const EnterpriseDataRow={name,owner:user.id};
+        const enterprise=await Enterprises.create(EnterpriseDataRow);
+        const EnterpriseUserDataRow={id_user:user.id,id_enterprise:enterprise.id};
+        await Enterprise_users.create(EnterpriseUserDataRow);
+        return res.redirect('/enterprises/home');
+    }
+    static async updateEnterprise(req,res){
+        const user=req.data.user;
+        console.log(req.body);
+        //const EnterpriseDataRow={name,owner:user.id};
+        //const enterprise=await Enterprises.create(EnterpriseDataRow);
+        //const EnterpriseUserDataRow={id_user:user.id,id_enterprise:enterprise.id};
+        //await Enterprise_users.create(EnterpriseUserDataRow);
+        return res.redirect('/enterprises/home');
+    }
+    static async addUserToEnterprise(req,res){
+        try{
+            const { email }=req.body;
+            const { user }=req.data;
+            const { enterprise } =user;
+            let userToAdd=await Users.findOne({where:{email}});
+            if(!userToAdd) throw new Error('Usuario nao encontrado');
+            userToAdd=userToAdd.dataValues;
+            await Enterprise_users.create({id_user:userToAdd.id,id_enterprise:enterprise.id});
+            await sendEmail({
+                email:email,
+                server_url:req.protocol + '://' + req.get('host'),
+                token:false,
+                name:userToAdd.name,
+                time:false,
+                enterprise:enterprise.name
+            },'notification_enterprise');
+            return res.status(200).json("05_SUCCESS");
+        } catch(err){
+            return res.status(500).json(err.message);
+        }
     }
 }
-module.exports=TeamsController;
+module.exports=EnterpriseController;
