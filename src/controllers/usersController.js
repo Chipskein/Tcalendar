@@ -150,7 +150,7 @@ class UserController{
             const temp_token =req.query.token;
             const { id,email } = getDataFromToken(temp_token);
             await Users.update({ active: true },{where: { id }});
-            const session_token=prepareSessionToken(id,email);
+            const session_token= await prepareSessionToken(id,email);
             res.cookie('token',session_token);
             return res.redirect('/users/home');
         }
