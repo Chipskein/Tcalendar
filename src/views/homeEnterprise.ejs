@@ -23,10 +23,12 @@
             </div>
             <p class="TcalendarText">Suas equipes</p>
             <div class="lines">
-                <div class="Tcalendar">
-                    <img class="calendar" src="/imgs/team.png">
-                    <p class="TcalendarText">Team</p>
-                </div>
+                <% for (let team of teams){ %> 
+                    <div class="Tcalendar">
+                        <img class="calendar" src="/imgs/team.png">
+                        <p class="TcalendarText"><%=team.name%></p>
+                    </div>
+                <% } %> 
             </div>
             <div class="profile">
 

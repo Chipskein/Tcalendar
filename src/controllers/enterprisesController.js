@@ -7,9 +7,10 @@ class EnterpriseController{
     }
     static async showHome(req,res){
         const { user }=req.data;
-        const { enterprise }=user;
+        const { enterprise,teams }=user;
         let owner= (user.id==enterprise.owner) ? true:false; 
-        return res.render('homeEnterprise',{user,enterprise,owner});
+        console.log(teams);
+        return res.render('homeEnterprise',{user,enterprise,teams,owner});
     }
     static async createEnterprise(req,res){
         const user=req.data.user;
