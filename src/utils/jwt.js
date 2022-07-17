@@ -34,15 +34,21 @@ module.exports={
         return token;
     },     
     getUserInfoByToken:async (token)=>{
-        const {id,email,token_type} = module.exports.getDataFromToken(token)
-       //pegar os times do usuario tbm;
-       let user=await Users.findOne({where: { id:id },include:{association:"getUserEnterprise"}});
+       const {id,email,token_type} = module.exports.getDataFromToken(token)
+       let user=await Users.findOne({where: { id:id },include:[{association:"getUserEnterprises"},{association:"getUserTeams"}]});
        user=user.dataValues;
-       const getUserEnterprise=user.getUserEnterprise;
-       if(getUserEnterprise.length>0) user.enterprise=getUserEnterprise[0].dataValues;  
+       delete(user.password);     
+
+       const getUserEnterprises=user.getUserEnterprises;
+       if(getUserEnterprises.length>0) user.enterprise=getUserEnterprises[0].dataValues;  
        else user.enterprise=null;
-       delete(user.password);
-       delete(user.getUserEnterprise);
+       delete(user.getUserEnterprises);
+
+       const getUserTeams=user.getUserTeams;
+       user.teams=[];
+       if(getUserTeams.length>0) getUserTeams.map(team=>user.teams.push(team.dataValues));
+       delete(user.getUserTeams);
+       
        return {user,token,token_type};
     },
 }
