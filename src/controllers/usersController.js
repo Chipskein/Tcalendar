@@ -11,7 +11,10 @@ class UserController{
     static async showHome(req,res){
         const { user }=req.data;
         const { enterprise }=user;
-        return res.render('home',{user,enterprise});
+        if(enterprise) return res.redirect('/enterprises/home');
+        
+        //return res.render('home',{user,enterprise});
+        return res.redirect('/enterprises/');
     }
     static async showLogin(req,res){
         return res.render('login',{err:false});
