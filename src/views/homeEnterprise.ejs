@@ -36,11 +36,12 @@
         </div>
     </div>
     <%  if(owner){ %>
-        <!-- adicionar usuario na empresa
+        
         <form action="/enterprises/adduser" method="post">
             <input type="email" name="email" placeholder="Email do usuario" required>
-            <input type="submit" value="Adicionar usuario">
-        </form> -->
+            <input type="submit" value="Convidar Usuario para empresa">
+        </form>
+
     <% } else{ %>
         mostrar times
     <% }  %>

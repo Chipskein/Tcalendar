@@ -3,6 +3,13 @@ const { Teams } =require('../models/teamsModel');
 const { Teams_invite } =require('../models/teams_inviteModel');
 const { Teams_users }= require('../models/teams_usersModel');
 class TeamsController{
+
+    static async getCreateTeam(req,res,next){
+        //create team
+        const { user }=req.data
+        const { name,description } = req.body;
+        return res.send('porra');
+    }
     static async createTeam(req,res,next){
         //create team
         const { user }=req.data
@@ -16,5 +23,14 @@ class TeamsController{
         // if user exists send invite
         //else send special invite by email
     }
+    static async getTeamSchedule(req,res,next){
+        // if user exists send invite
+        //else send special invite by email
+    }
+    static async getPartiticapnts(req,res,next){
+        // if user exists send invite
+        //else send special invite by email
+    }
+    
 }
 module.exports=TeamsController;
