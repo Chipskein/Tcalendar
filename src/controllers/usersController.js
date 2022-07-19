@@ -45,8 +45,8 @@ class UserController{
                 server_url:req.protocol + '://' + req.get('host'),
                 token:await prepareTempToken(user.id,user.email),
                 name:user.name,
-                time:"",
-                enterprise:""
+                team:false,
+                enterprise:false
             },'reset_password');
             return res.send('Email Enviado');
         }
@@ -80,8 +80,8 @@ class UserController{
                 server_url:req.protocol + '://' + req.get('host'),
                 token:createJWT({id:data.id},'temp'),
                 name:data.name,
-                time:"",
-                enterprise:""
+                team:false,
+                enterprise:false
             });
             return res.render('active_account',{user:data});
         }
@@ -109,8 +109,8 @@ class UserController{
                     server_url:req.protocol + '://' + req.get('host'),
                     token:await prepareTempToken(user.id,user.email),
                     name:user.name,
-                    time:"",
-                    enterprise:""
+                    team:false,
+                    enterprise:false
                 });
                 return res.render('active_account',{user:user});
             }

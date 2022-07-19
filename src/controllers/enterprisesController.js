@@ -42,7 +42,7 @@ class EnterpriseController{
                 server_url:req.protocol + '://' + req.get('host'),
                 token:false,
                 name:userToAdd.name,
-                time:false,
+                team:false,
                 enterprise:enterprise.name
             },'notification_enterprise');
             return res.status(200).json("05_SUCCESS");

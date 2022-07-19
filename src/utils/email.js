@@ -43,7 +43,7 @@ function prepareEmail(type,data,server_url){
             subject="Tcalendar | Notificação Reunião Marcada";
             email_html_body=`
                 <p>
-                    ${data.name}, você tem uma reunião marcada na agenda do time ${data.time} da empresa ${data.enterprise}
+                    ${data.name}, você tem uma reunião marcada na agenda do time ${data.team} da empresa ${data.enterprise}
                 </p>
             `;
             break;

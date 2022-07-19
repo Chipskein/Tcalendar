@@ -33,8 +33,8 @@ module.exports={
         const token=module.exports.createJWT({id,email},'temp');
         return token;
     },
-    prepareInviteToken:async(user,email,team,enterprise,isNewUser)=>{
-        const token=module.exports.createJWT({user,email,team,enterprise,isNewUser},'temp');
+    prepareInviteToken:async(user,email,team,teamId,enterprise,isNewUser)=>{
+        const token=module.exports.createJWT({user,email,team,teamId,enterprise,isNewUser},'temp');
         return token;
     },  
     getUserInfoByToken:async (token)=>{

@@ -3,6 +3,7 @@ const { Teams } =require('../models/teamsModel');
 const { Teams_invite } =require('../models/teams_inviteModel');
 const { Teams_users }= require('../models/teams_usersModel');
 const { sendEmail }=require('../utils/email');
+const { prepareInviteToken }=require('../utils/jwt');
 class TeamsController{
 
     static async getCreateTeam(req,res,next){
@@ -36,45 +37,41 @@ class TeamsController{
     }
     static async inviteUserToTeam(req,res,next){
         try{
-            const teamId=req.params.id;
-            const { email }=req.body;
-            const userAdmin=req.data;
+            const teamId = req.params.id;
+            const { email } = req.body;
+            const  userAdmin  = req.data.user;
+            const { enterprise } = userAdmin;
             let team=await Teams.findOne({where:{id:teamId}});
             team = team ? team.dataValues:false
             if(!team) throw Error('Time não existe');
-
-            //user exists
             let user=await Users.findOne({where:{ email }});
             user = user ? user.dataValues:false;
-            if(user){
-                //jwt accept invite
-            } else{
-                //jwt create accoutn and accept invite
-            }
-            //insert into Team_invite;
-            //create jwt
-            //sendmail
+            const isNewUser= user ? false:true;
+            if(isNewUser) user=await Users.create({email,password:'',name:''});
+            await Teams_invite.upsert({
+                id_team:teamId,
+                id_user:user.id,
+                status:"waiting"
+            });
             await sendEmail({
                 email:email,
                 server_url:req.protocol + '://' + req.get('host'),
-                token:false,
-                name:false,
-                time:false,
-                enterprise:false
+                token:await prepareInviteToken(user.id,email,teamId,enterprise.id,isNewUser),
+                team:team.name,
+                teamId:team.id,
+                enterprise:enterprise.name
             },'team_invite');
-            
-            return res.status(200).json({user,team,userAdmin})
+                 
+            return res.redirect(`/team/${team.id}`);
         }
         catch(err){
-
+            return res.status(400).json(err)
         }
     }
     static async getTeamSchedule(req,res,next){
-        
-        let team=await Teams.findOne({where:{id:2}});
-        team=team.dataValues;
-        console.log(team);
-    
+        const { id }=req.params;
+        let team = await Teams.findOne({where:{id}});
+        team = team.dataValues;
         return res.render("homeTeams",{team});
     }
     static async getPartiticapnts(req,res,next){
