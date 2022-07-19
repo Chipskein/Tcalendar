@@ -27,14 +27,46 @@ class TeamsController{
         return res.redirect('/');
     }
     static async addUserToTeam(req,res,next){
-        //verify invite
+        const { token }=req.query;
+        //case accepted
+        //update Team_invte
+        //insert Team_users
+
     }
     static async inviteUserToTeam(req,res,next){
-        
+        try{
+            const teamId=req.params.id;
+            const { email }=req.body;
+            const userAdmin=req.data;
+            let team=await Teams.findOne({where:{id:teamId}});
+            team = team ? team.dataValues:false
+            if(!team) throw Error('Time não existe');
+
+            //user exists
+            let user=await Users.findOne({where:{ email }});
+            user = user ? user.dataValues:false;
+            if(user){
+                //jwt accept invite
+            } else{
+                //jwt create accoutn and accept invite
+            }
+            //insert into Team_invite;
+            //create jwt
+            //sendmail
+            
+            return res.status(200).json({user,team,userAdmin})
+        }
+        catch(err){
+
+        }
     }
     static async getTeamSchedule(req,res,next){
         
-        return res.status(200).json("criar teams home")
+        let team=await Teams.findOne({where:{id:2}});
+        team=team.dataValues;
+        console.log(team);
+    
+        return res.render("homeTeams",{team});
     }
     static async getPartiticapnts(req,res,next){
         

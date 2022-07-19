@@ -32,7 +32,11 @@ module.exports={
     prepareTempToken:async (id,email)=>{
         const token=module.exports.createJWT({id,email},'temp');
         return token;
-    },     
+    },
+    prepareInviteToken:async(user,email,team,enterprise,isNewUser)=>{
+        const token=module.exports.createJWT({user,email,team,enterprise,isNewUser},'temp');
+        return token;
+    },  
     getUserInfoByToken:async (token)=>{
        const {id,email,token_type} = module.exports.getDataFromToken(token)
        let user=await Users.findOne({where: { id:id },include:[{association:"getUserEnterprises"},{association:"getUserTeams"}]});

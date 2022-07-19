@@ -9,8 +9,8 @@ router.post('/',verifyToken,isInEnterprise,TeamsController.createTeam);
 
 router.get('/:id',verifyToken,isInEnterprise,/*isinteam*/TeamsController.getTeamSchedule);
 router.get('/:id/participants',verifyToken,isInEnterprise,/*isinteam*/TeamsController.getPartiticapnts);
-router.post('/:id/invite/adduser',TeamsController.addUserToTeam);
-router.get('/:id/invite/:email',TeamsController.inviteUserToTeam);
-//router.get('/invite/accepted/:token',TeamsController.);
+
+router.post('/:id/invite/',verifyToken,/*isTeamAdmin,*/TeamsController.inviteUserToTeam);
+router.get('/:id/invite/accept',TeamsController.addUserToTeam);//token in query
 
 module.exports=router;
