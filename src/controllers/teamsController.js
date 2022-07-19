@@ -2,8 +2,9 @@ const { Users } = require("../models/usersModel");
 const { Teams } =require('../models/teamsModel');
 const { Teams_invite } =require('../models/teams_inviteModel');
 const { Teams_users }= require('../models/teams_usersModel');
+const { Enterprise_users }=require('../models/enterprise_usersModel')
 const { sendEmail }=require('../utils/email');
-const { prepareInviteToken }=require('../utils/jwt');
+const { prepareInviteToken,getDataFromToken, prepareSessionToken }=require('../utils/jwt');
 class TeamsController{
 
     static async getCreateTeam(req,res,next){
@@ -30,10 +31,26 @@ class TeamsController{
     }
     static async addUserToTeam(req,res,next){
         const { token }=req.query;
-        //case accepted
-        //update Team_invte
-        //insert Team_users
-
+        const { user,email,team,enterprise,isNewUser }=getDataFromToken(token);
+        await Teams_invite.update({
+            status:'accepted',
+            response_date:new Date()
+        },{where:{id_user:user,id_team:team}});
+        
+        await Teams_users.create({
+            id_user:user,
+            id_team:team
+        });
+        
+        await Enterprise_users.create({
+            id_user:user,
+            id_enterprise:enterprise
+        });
+        const session_token=await prepareSessionToken(user,email);
+        res.cookie('token', session_token);
+        
+        if(isNewUser) return res.redirect(`/users/update`);
+        return res.redirect('/enterprise/home');
     }
     static async inviteUserToTeam(req,res,next){
         try{
@@ -47,7 +64,7 @@ class TeamsController{
             let user=await Users.findOne({where:{ email }});
             user = user ? user.dataValues:false;
             const isNewUser= user ? false:true;
-            if(isNewUser) user=await Users.create({email,password:'',name:''});
+            if(isNewUser) user=await Users.create({email,password:'',name:'',active:true});
             await Teams_invite.upsert({
                 id_team:teamId,
                 id_user:user.id,

@@ -54,7 +54,10 @@ class UserController{
             return res.render('showForgetPassword',{err:err.message});   
         }
     }
-    
+    static async ShowUpdate(req,res){
+        const { user }=req.data
+        return res.render('userUpdate',{user,err:false});
+    }
     static async register(req,res){
         try{
             const {name,password,email} =req.body;
