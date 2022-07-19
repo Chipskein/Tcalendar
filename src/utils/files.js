@@ -7,20 +7,8 @@ module.exports={
         const file=fs.readFileSync(filepath);
         return file.toString();
     },
-    replaceValuesFromTxt:(txt,values)=>{
-        /*
-            values [
-                    {type:'user_name',value:''}
-                    {type:'user_link',value:''}
-                    {type:'user_time',value:''}
-                    {type:'user_enterprise',value:''}
-            ]
-        */
-        values.map((obj)=>{
-            let type=`\${${obj.type}}`
-            txt=txt.replaceAll(type,obj.value)
-        })
-        return txt;
+    replaceInsideBodyFromHTML:(template_html,html)=>{
+        return template_html.replace('${html}',html);
     },
     deleteFile:(path)=>{
         const fileExists=fs.existsSync(path);

@@ -2,6 +2,7 @@ const { Users } = require("../models/usersModel");
 const { Teams } =require('../models/teamsModel');
 const { Teams_invite } =require('../models/teams_inviteModel');
 const { Teams_users }= require('../models/teams_usersModel');
+const { sendEmail }=require('../utils/email');
 class TeamsController{
 
     static async getCreateTeam(req,res,next){
@@ -53,6 +54,14 @@ class TeamsController{
             //insert into Team_invite;
             //create jwt
             //sendmail
+            await sendEmail({
+                email:email,
+                server_url:req.protocol + '://' + req.get('host'),
+                token:false,
+                name:false,
+                time:false,
+                enterprise:false
+            },'team_invite');
             
             return res.status(200).json({user,team,userAdmin})
         }
