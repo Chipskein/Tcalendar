@@ -9,7 +9,6 @@ class EnterpriseController{
         const { user }=req.data;
         const { enterprise,teams }=user;
         let owner= (user.id==enterprise.owner) ? true:false; 
-        console.log(teams);
         return res.render('homeEnterprise',{user,enterprise,teams,owner});
     }
     static async createEnterprise(req,res){
@@ -23,7 +22,6 @@ class EnterpriseController{
     }
     static async updateEnterprise(req,res){
         const user=req.data.user;
-        console.log(req.body);
         //const EnterpriseDataRow={name,owner:user.id};
         //const enterprise=await Enterprises.create(EnterpriseDataRow);
         //const EnterpriseUserDataRow={id_user:user.id,id_enterprise:enterprise.id};

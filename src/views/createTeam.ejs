@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCalendar | Team</title>
+    <link rel="stylesheet" href="/css/loginRegister.css">
+    <%- include('includes/icon') %>
+    <%- include('includes/font') %>
+</head>
+<body>
+    <div class="main">
+        <div class="head">
+            <img src="/svgs/logo.svg" class="logo" alt="" srcset="">
+            <p class="appname">TCalendar</p>
+        </div>
+        <div class="body">
+            <p class="maintxt">A agenda para organizar seu sucesso</p>
+            <div class="button-off button-white button-start">
+                <a href="/teams/" class="white">Comece agora</a>
+            </div>
+        </div>
+        <div class="aside">
+            <p class="form-title">Crie um time</p>
+            <form action="/teams" method="post" class="form">
+                <input type="text" class="input" name='name' placeholder="Nome da Time" required>
+                <input type="text" class="input" name='description' placeholder="Descrição do Time" required>
+                <input type="submit" class="button" value="Criar Time">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
