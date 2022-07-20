@@ -2,7 +2,7 @@ const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
 const { sendEmail }=require('../utils/email')
-const { createJWT,getDataFromToken,prepareSessionToken, prepareTempToken }=require('../utils/jwt');
+const { getDataFromToken,prepareSessionToken, prepareTempToken }=require('../utils/jwt');
 class UserController{
 
     static async showRegister(req,res){
@@ -45,8 +45,8 @@ class UserController{
                 server_url:req.protocol + '://' + req.get('host'),
                 token:await prepareTempToken(user.id,user.email),
                 name:user.name,
-                time:"",
-                enterprise:""
+                team:false,
+                enterprise:false
             },'reset_password');
             return res.send('Email Enviado');
         }
@@ -54,7 +54,10 @@ class UserController{
             return res.render('showForgetPassword',{err:err.message});   
         }
     }
-    
+    static async ShowUpdate(req,res){
+        const { user }=req.data
+        return res.render('userUpdate',{user,err:false});
+    }
     static async register(req,res){
         try{
             const {name,password,email} =req.body;
@@ -78,10 +81,10 @@ class UserController{
             await sendEmail({
                 email:data.email,
                 server_url:req.protocol + '://' + req.get('host'),
-                token:createJWT({id:data.id},'temp'),
+                token:await prepareTempToken(data.id,data.email),
                 name:data.name,
-                time:"",
-                enterprise:""
+                team:false,
+                enterprise:false
             });
             return res.render('active_account',{user:data});
         }
@@ -109,8 +112,8 @@ class UserController{
                     server_url:req.protocol + '://' + req.get('host'),
                     token:await prepareTempToken(user.id,user.email),
                     name:user.name,
-                    time:"",
-                    enterprise:""
+                    team:false,
+                    enterprise:false
                 });
                 return res.render('active_account',{user:user});
             }

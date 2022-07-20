@@ -10,10 +10,12 @@ class Teams_invite extends Model {
             id_user:{
                 type:DataTypes.INTEGER,
                 allowNull: false,
+                primaryKey: true,
             },
             id_team:{
                 type:DataTypes.INTEGER,
                 allowNull: false,
+                primaryKey: true,
             },
             status:{
                 type:DataTypes.STRING,

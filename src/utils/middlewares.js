@@ -24,7 +24,7 @@ module.exports={
 
     isLogged:async (req,res,next)=>{
         const { data }=req;
-        if(data!=null){
+        if(data!=null){ 
             req.data=data;
             next()
         }
