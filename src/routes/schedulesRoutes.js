@@ -1,4 +1,6 @@
 const {Router} = require("express");
+const SchduleController = require("../controllers/schedulesController");
 const router=Router();
-router.get('/',(req,res)=>{return res.send('TESTANDo')});
+router.get('/',SchduleController.list);
+router.post('/',SchduleController.create);
 module.exports=router;
