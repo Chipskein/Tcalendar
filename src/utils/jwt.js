@@ -26,15 +26,15 @@ module.exports={
         return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
     },
     prepareSessionToken:async (id,email)=>{        
-        const token=module.exports.createJWT({id,email},'session');
+        const token=createJWT({id,email},'session');
         return token;
     },
     prepareTempToken:async (id,email)=>{
-        const token=module.exports.createJWT({id,email},'temp');
+        const token=createJWT({id,email},'temp');
         return token;
     },
     prepareInviteToken:async(user,email,team,enterprise,isNewUser)=>{
-        const token=module.exports.createJWT({user,email,team,enterprise,isNewUser},'temp');
+        const token=createJWT({user,email,team,enterprise,isNewUser},'temp');
         return token;
     },  
     getUserInfoByToken:async (token)=>{
