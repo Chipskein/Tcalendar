@@ -2,7 +2,7 @@ const { uploadImage }=require('../utils/image')
 const { hashPassword,verifyPassword } =require('../utils/password');
 const { Users }=require('../models/usersModel');
 const { sendEmail }=require('../utils/email')
-const { createJWT,getDataFromToken,prepareSessionToken, prepareTempToken }=require('../utils/jwt');
+const { getDataFromToken,prepareSessionToken, prepareTempToken }=require('../utils/jwt');
 class UserController{
 
     static async showRegister(req,res){
@@ -81,7 +81,7 @@ class UserController{
             await sendEmail({
                 email:data.email,
                 server_url:req.protocol + '://' + req.get('host'),
-                token:createJWT({id:data.id},'temp'),
+                token:await prepareTempToken(data.id,data.email),
                 name:data.name,
                 team:false,
                 enterprise:false
