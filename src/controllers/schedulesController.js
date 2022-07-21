@@ -15,16 +15,18 @@ async function isDateAvaliable(id_team,date){
     if (isDateNotAvaliableInTeamSchedule) return false;
 
     //verifica se cada usuario do time tem esse horario disponivel
-    const teamUsers=await Teams_users.findAll({where:{id_team}})
-    const teamUsersIds=[];
-    teamUsers.map(teamUser=>teamUsersIds.push(teamUser.dataValues.id_user))
-    const usersSchedules=await Schedules.findAll({where:{
-        id_user:teamUsersIds,
-        date
-    }});
-    const isDateNotAvaliableInUserSchedule = usersSchedules.length>0 ? true:false;
-    if (isDateNotAvaliableInUserSchedule) return false;
-    
+        //verifica se cada usuario do time alocou esse horario para outro time
+        const teamUsers=await Teams_users.findAll({where:{id_team}})
+        const teamUsersIds=[];
+        teamUsers.map(teamUser=>teamUsersIds.push(teamUser.dataValues.id_user))
+        const usersSchedules=await Schedules.findAll({where:{
+            id_user:teamUsersIds,
+            date
+        }});
+        const isDateNotAvaliableInUserSchedule = usersSchedules.length>0 ? true:false;
+        if (isDateNotAvaliableInUserSchedule) return false;
+        //verifica se cada usuario do time faz parte de um time que alocou esse horario
+
     return true;
 }
 class SchduleController{
