@@ -21,7 +21,7 @@ Users.associate(db.models);
 Enterprises.associate(db.models);
 //Enterprise_users.associate(db.models);
 Teams.associate(db.models);
-//Teams_users.associate(db.models);
+Teams_users.associate(db.models);
 Teams_invite.associate(db.models);
 //Schedules.associate(db.models);
 

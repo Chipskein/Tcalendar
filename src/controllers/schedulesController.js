@@ -1,32 +1,39 @@
 const { Schedules }=require('../models/schedulesModel');
 const { Teams_users }= require('../models/teams_usersModel');
+const { rawQuery }=require('../config/sequelize')
 const { isAValidDate }=require('../utils/date');
-async function isDateAvaliable(id_team,date){
+async function verifyUsersSchedule(teamUsersIds,date){
+        const query=`
+            select  
+            "Schedules"."id"
+            from 
+            "Teams_users"
+            join "Teams" on "Teams"."id" = "Teams_users"."id_team"
+            join "Schedules" on "Schedules"."id_team"="Teams"."id"
+            where
+                "Teams_users"."id_user" in (${teamUsersIds.join(',')})
+                and "Schedules"."date" = '${new Date(date).toISOString()}'
+	    `;
+        const usersSchedules=await rawQuery(query);
+        const isDateAvaliableInUserSchedule = !usersSchedules.length>0 ? true:false;
+        return isDateAvaliableInUserSchedule;
     
-    //verifica se a data esta alocada para o time nesse horarioa
+}
+async function isDateAvaliable(id_team,date){
+
     const teamSchedule=await Schedules.findOne({
         where:{
             id_team,
             date
         }
     });
-    console.log(date)
     const isDateNotAvaliableInTeamSchedule = teamSchedule ? true:false;
     if (isDateNotAvaliableInTeamSchedule) return false;
-
-    //verifica se cada usuario do time tem esse horario disponivel
-        //verifica se cada usuario do time alocou esse horario para outro time
-        const teamUsers=await Teams_users.findAll({where:{id_team}})
-        const teamUsersIds=[];
-        teamUsers.map(teamUser=>teamUsersIds.push(teamUser.dataValues.id_user))
-        const usersSchedules=await Schedules.findAll({where:{
-            id_user:teamUsersIds,
-            date
-        }});
-        const isDateNotAvaliableInUserSchedule = usersSchedules.length>0 ? true:false;
-        if (isDateNotAvaliableInUserSchedule) return false;
-        //verifica se cada usuario do time faz parte de um time que alocou esse horario
-
+    const teamUsers=await Teams_users.findAll({where:{id_team}})
+    const teamUsersIds=[];
+    teamUsers.map(teamUser=>teamUsersIds.push(teamUser.dataValues.id_user))
+    const isDateAvaliableInUserSchedule=await verifyUsersSchedule(teamUsersIds,date);
+    if (!isDateAvaliableInUserSchedule) return false;
     return true;
 }
 class SchduleController{
