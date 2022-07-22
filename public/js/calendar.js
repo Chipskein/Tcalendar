@@ -69,26 +69,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
     renderCalendar(days);
 });
 */
+
+
 const divCalendarWeek = document.getElementById('calendarWeek');
+const divCalendarMonth = document.getElementById('calendar-month-name');
+const divCalendarYear = document.getElementById('calendar-year-number');
 
 let date = new Date();
 
+let currentMonth = date.getMonth();
+let currentYear = date.getFullYear();
+
+console.log('currentMonth ',currentMonth);
+console.log('currentYear ',currentYear);
+
 let days = [];
 
-// const months = [
-//     {id: 0, txt: 'Janeiro', days: 31},
-//     {id: 1, txt: 'Fevereiro', days: 28},
-//     {id: 2, txt: 'Março', days: 31},
-//     {id: 3, txt: 'Abril', days: 30},
-//     {id: 4, txt: 'Maio', days: 31},
-//     {id: 5, txt: 'Junho', days: 30},
-//     {id: 6, txt: 'Julho', days: 31},
-//     {id: 7, txt: 'Agosto', days: 31},
-//     {id: 8, txt: 'Setembro', days: 30},
-//     {id: 9, txt: 'Outubro', days: 31},
-//     {id: 10, txt: 'Novembro', days: 30},
-//     {id: 11, txt: 'Dezembro', days: 31},
-// ];
+const months = [
+    {id: 0, txt: 'Janeiro', days: 31},
+    {id: 1, txt: 'Fevereiro', days: 28},
+    {id: 2, txt: 'Março', days: 31},
+    {id: 3, txt: 'Abril', days: 30},
+    {id: 4, txt: 'Maio', days: 31},
+    {id: 5, txt: 'Junho', days: 30},
+    {id: 6, txt: 'Julho', days: 31},
+    {id: 7, txt: 'Agosto', days: 31},
+    {id: 8, txt: 'Setembro', days: 30},
+    {id: 9, txt: 'Outubro', days: 31},
+    {id: 10, txt: 'Novembro', days: 30},
+    {id: 11, txt: 'Dezembro', days: 31},
+];
 
 const getAllDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1);
@@ -130,10 +140,59 @@ const generateDays = (date) => {
 
 const renderCalendar = (days) => {
     divCalendarWeek.innerHTML = '';
+    divCalendarMonth.innerHTML = months[currentMonth].txt;
+    divCalendarYear.innerHTML = currentYear;
 
     days.map(item => {                
         divCalendarWeek.innerHTML += `<div class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}"><p>${item.day != null ? item.day : ''}</p></div>`;
     })
+}
+
+const nextMonth = () => {
+    if(currentMonth+1 == 12) {
+        currentMonth = 0;
+        currentYear++;
+    } else {
+        currentMonth++;
+    }
+
+    // divCalendarMonth.innerHTML = months[currentMonth].txt;
+    // divCalendarYear.innerHTML = currentYear;
+    let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
+    generateDays(newDate);
+    renderCalendar(days)
+}
+
+const prevMonth = () => {
+    if(currentMonth-1 == -1) {
+        currentMonth = 11;
+        currentYear--;
+    } else {
+        currentMonth--;
+    }
+    
+    // divCalendarMonth.innerHTML = months[currentMonth].txt;
+    // divCalendarYear.innerHTML = currentYear;
+    let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
+    generateDays(newDate);
+    renderCalendar(days)
+}
+
+const nextYear = () => {
+    currentYear++;
+    divCalendarYear.innerHTML = currentYear;
+
+    let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
+    generateDays(newDate);
+    renderCalendar(days)
+}
+const prevYear = () => {
+    currentYear--;
+    divCalendarYear.innerHTML = currentYear;
+    
+    let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
+    generateDays(newDate);
+    renderCalendar(days)
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {

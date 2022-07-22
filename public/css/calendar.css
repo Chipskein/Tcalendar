@@ -1,0 +1,66 @@
+.calendar {
+    grid-area: calendar;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    background-color: #191919;
+    border-radius: 10px;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+}
+.calendar-selectors {
+    display: flex;
+    width: 88%;
+    justify-content: space-between;
+}
+
+.calendar-month, .calendar-year {
+    display: flex;
+    align-items: center;
+}
+
+.arrow-reverse {
+    transform: rotate(180deg);
+}
+
+#calendar-month-name, #calendar-year-number {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.calendar-weekNames {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 75vw;
+    align-items: center;
+    text-align: center;
+}
+.calendar-weekName {
+    /* border: 1px solid #292B2F; */
+    font-weight: bold;
+}
+.calendar-week {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 10vh 10vh 10vh 10vh 10vh;
+    width: 75vw;
+}
+.calendar-day {
+    text-align: center;
+    padding: 1%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    border-radius: 5px;
+    /* border: 1px solid #292B2F; */
+    /* width: 7vw; */
+    height: 9vh;
+    /* margin-bottom: 1vh; */
+    /* margin-right: 1vw; */
+    justify-content: center;
+    align-items: center;
+}
+.today {
+    background-color: #79BCE7;
+}

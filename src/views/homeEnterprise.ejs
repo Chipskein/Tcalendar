@@ -7,6 +7,7 @@
     <title>Tcalendar | Enterprise Home</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/calendar.css">
     <%- include('includes/icon') %>
     <%- include('includes/font') %>
 </head>
@@ -19,8 +20,16 @@
 
         <div class="calendar">
             <div class="calendar-selectors">
-                <div class="calendar-month"></div>
-                <div class="calendar-year"></div>
+                <div class="calendar-month">
+                    <div onclick="prevMonth()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
+                    <p id="calendar-month-name"></p>
+                    <div onclick="nextMonth()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
+                </div>
+                <div class="calendar-year">
+                    <div onclick="prevYear()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
+                    <p id="calendar-year-number"></p>
+                    <div onclick="nextYear()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
+                </div>
             </div>
             <div class="calendar-weekNames">
                 <div class="calendar-weekName"><p>DOM</p></div>
