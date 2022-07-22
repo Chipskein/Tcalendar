@@ -35,7 +35,7 @@ class Teams extends Model {
         //this.belongsTo(models.Enterprises,{foreignKey:'id_enterprise',foreignKeyConstraint:true});
         //this.hasMany(models.Schedules,{ foreignKey: 'id_team'})
         this.belongsToMany(models.Users,{ foreignKey: 'id_team',foreignKeyConstraint:true,through:models.Teams_users})
-        //this.hasOne(models.Teams_users,{ foreignKey: 'id_team',foreignKeyConstraint:true});
+        this.hasOne(models.Teams_users,{ foreignKey: 'id_team',foreignKeyConstraint:true});
         this.hasOne(models.Teams_invite, { foreignKey: 'id_team',foreignKeyConstraint:true});
         this.hasOne(models.Schedules,{ foreignKey: 'id_team',foreignKeyConstraint:true});
     }

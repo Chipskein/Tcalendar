@@ -24,7 +24,7 @@ class Teams_users extends Model {
     }
     static associate(models) {
         //this.hasMany(models.Users,{foreignKey:'id_user'});
-        //this.hasMany(models.Teams,{foreignKey:'id_team'});
+        this.hasMany(models.Teams,{foreignKey:'id'});
     }
 }
 
