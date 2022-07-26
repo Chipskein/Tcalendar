@@ -2,13 +2,14 @@
     grid-area: calendar;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    width: 94%;
+    height: 75vh;
     background-color: #191919;
     border-radius: 10px;
-    align-self: center;
     justify-self: center;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    margin-top: 1vh;
 }
 .calendar-selectors {
     display: flex;

@@ -1,0 +1,119 @@
+.teams-container {
+    display: grid;
+    grid-template-areas: "teams add";
+    grid-template-columns: 80fr 3fr;
+    justify-self: center;
+    /* border: 1px solid #000; */
+    width: 77vw;
+    justify-content: end;
+    align-items: center;
+}
+
+.teams-box-container {
+    grid-area: teams;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+.team-box {
+    width: 20%;
+    color: #79BCE7;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #79BCE7;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1%;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #79BCE7;
+    color: #000;
+    border: 1px solid transparent;
+}
+
+.team-box p {
+    font-size: 1.4em;
+}
+
+.teams-add {
+    grid-area: add;
+    background-color: #79BCE7;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    color: #000;
+    cursor: pointer;
+}
+
+#teams-create-bg {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.teams-create-card {
+    background-color: #79BCE7;
+    width: 652px;
+    height: 323px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.teams-create-card form {
+    width: 90%;
+    flex-direction: column;
+}
+
+.teams-create-card form h3 {
+    font-size: 1.5em;
+}
+
+.input-name {
+    width: 100%;
+    border-radius: 5px;
+    border-color: transparent;
+    margin-top: 1vh;
+    padding: 1%;
+}
+
+.teams-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.teams-button {
+    width: 45%;
+    border: 1px solid transparent;
+    background-color: #000;
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12vh;
+}
+
+.cancel {
+    background-color: transparent !important;
+    color: #000 !important;
+    border-color: #000;
+}

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/calendar.css">
+    <link rel="stylesheet" href="/css/teams.css">
     <%- include('includes/icon') %>
     <%- include('includes/font') %>
 </head>
@@ -18,65 +19,35 @@
             <a href="/users/logoff"><img src="/imgs/logout.png"></a>
         </div>
 
-        <div class="calendar">
-            <div class="calendar-selectors">
-                <div class="calendar-month">
-                    <div onclick="prevMonth()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
-                    <p id="calendar-month-name"></p>
-                    <div onclick="nextMonth()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
-                </div>
-                <div class="calendar-year">
-                    <div onclick="prevYear()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
-                    <p id="calendar-year-number"></p>
-                    <div onclick="nextYear()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
-                </div>
-            </div>
-            <div class="calendar-weekNames">
-                <div class="calendar-weekName"><p>DOM</p></div>
-                <div class="calendar-weekName"><p>SEG</p></div>
-                <div class="calendar-weekName"><p>TER</p></div>
-                <div class="calendar-weekName"><p>QUA</p></div>
-                <div class="calendar-weekName"><p>QUI</p></div>
-                <div class="calendar-weekName"><p>SEX</p></div>
-                <div class="calendar-weekName"><p>SÁB</p></div>
-            </div>
-
-            <div class="calendar-week" id="calendarWeek">
-                <!-- <div class="calendar-day"></div> -->
-                <!-- <div class="calendar-day">1</div> -->     
-            </div>
-        </div>
+        <%- include('includes/calendar') %>
 
         <div class="aside">
             <div class="Tcalendar">
                 <img class="calendarIcon" src="/imgs/calendar.png">
                 <p class="TcalendarText">Tcalendar</p>
             </div>
-            <p class="TcalendarText">Suas equipes</p>
+            <p class="TcalendarText">Membros</p>
             <div class="lines">
-                <% for (let team of teams){ %> 
-                    <a href="/teams/<%=team.id%>">
-                        <div class="Tcalendar">
-                            <img class="Tcalendar" src="/imgs/team.png">
-                            <p class="TcalendarText"><%=team.name%></p>
-                        </div>
-                    </a>
-                <% } %> 
+                
             </div>
             <div class="profile">
 
             </div>
         </div>
+
+        <div class="footer">
+            <%- include('includes/teams') %>
+        </div>
     </div>
-    <%  if(owner){ %>
+
+    <!-- <%  if(owner){ %>
         convidar usuario para empresa
         <form action="/enterprises/adduser" method="post">
             <input type="email" name="email" placeholder="Email do usuario" required>
             <input type="submit" value="Convidar Usuario para empresa">
         </form>
     <% } %>
-    <a href="/teams"> criar time </a>
+    <a href="/teams"> criar time </a> -->
 
-    <script src="/js/calendar.js"></script>
 </body>
 </html>

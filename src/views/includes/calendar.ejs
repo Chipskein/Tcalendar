@@ -1,0 +1,30 @@
+<div class="calendar">
+    <div class="calendar-selectors">
+        <div class="calendar-month">
+            <div onclick="prevMonth()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
+            <p id="calendar-month-name"></p>
+            <div onclick="nextMonth()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
+        </div>
+        <div class="calendar-year">
+            <div onclick="prevYear()"><img src="/imgs/arrow.png" alt="" srcset=""></div>
+            <p id="calendar-year-number"></p>
+            <div onclick="nextYear()"><img src="/imgs/arrow.png" class="arrow-reverse" alt="" srcset=""></div>
+        </div>
+    </div>
+    <div class="calendar-weekNames">
+        <div class="calendar-weekName"><p>DOM</p></div>
+        <div class="calendar-weekName"><p>SEG</p></div>
+        <div class="calendar-weekName"><p>TER</p></div>
+        <div class="calendar-weekName"><p>QUA</p></div>
+        <div class="calendar-weekName"><p>QUI</p></div>
+        <div class="calendar-weekName"><p>SEX</p></div>
+        <div class="calendar-weekName"><p>SÁB</p></div>
+    </div>
+
+    <div class="calendar-week" id="calendarWeek">
+        <!-- <div class="calendar-day"></div> -->
+        <!-- <div class="calendar-day">1</div> -->
+    </div>
+</div>
+
+<script src="/js/calendar.js"></script>

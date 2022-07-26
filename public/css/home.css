@@ -6,9 +6,10 @@
     display: grid;
     grid-template-areas: "body     aside"
                          "calendar aside"
+                         "footer aside"
     ;
     grid-template-columns: 82vw 17vw;
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 10vh 80vh 10vh;
 }
 .aside {
     grid-area: aside;
@@ -18,10 +19,14 @@
     justify-content: flex-start;
     align-items: center;
 }
-
 .body {
     grid-area: body;
     margin: 50px;
+}
+.footer {
+    grid-area: footer;
+    display: flex;
+    justify-self: center;
 }
 .header {
     display: flex;
