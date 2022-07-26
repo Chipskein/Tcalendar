@@ -6,11 +6,16 @@ module.exports={
         const cookie = req.headers.cookie;
         const token = getCookie(cookie,'token');
         if (cookie==null||token == '') return res.redirect('/users/login');
-        const userInfo=await getUserInfoByToken(token);
-        if(userInfo.token_type=='session'){
-            req.data=userInfo;
-            next();
-        } else {
+        try{
+            const userInfo=await getUserInfoByToken(token);
+            if(userInfo.token_type=='session'){
+                req.data=userInfo;
+                next();
+            } else {
+                res.cookie('token','');
+                return res.redirect('/users/login');
+            }
+        } catch(e){
             res.cookie('token','');
             return res.redirect('/users/login');
         }
