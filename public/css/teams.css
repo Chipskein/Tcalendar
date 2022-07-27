@@ -36,8 +36,11 @@
     border: 1px solid transparent;
 }
 
-.team-box p {
+.team-box button {
     font-size: 1.4em;
+    color: #79BCE7;
+    background-color: #292B2F;
+    border: none;
 }
 
 .teams-add {

@@ -6,9 +6,9 @@
     display: grid;
     grid-template-areas: "body     aside"
                          "calendar aside"
-                         "footer aside"
+                         "footer   aside"
     ;
-    grid-template-columns: 82vw 17vw;
+    grid-template-columns: 82vw 18vw;
     grid-template-rows: 10vh 80vh 10vh;
 }
 .aside {
@@ -17,7 +17,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    padding: 20px;
+
 }
 .body {
     grid-area: body;
@@ -36,7 +38,6 @@
 }
 .Tcalendar {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 .calendarIcon {
@@ -45,20 +46,79 @@
     margin-right: 10px;
 }
 .TcalendarText {
-    color: #AEE8E0;
-    font-size: 24px;
-}
-.lines {
-    margin: 15px 0px 15px 0px;
-    border: 1px solid #4F545C;
-    width: 100%;
-    border-right: none;
-    border-left: none;
+    color: #fff;
+    font-size: 20px;
 }
 .profile {
     background-color: #292B2F;
     position:absolute;
-    padding: 40px 0px 40px 0px;
+    padding: 25px 0px 25px 0px;
     bottom: 0px;
-    /* width: 280px; */
+    width: 330px;
+    margin-left: -20px;
+    z-index: 100;
+}
+.userImage{
+    width: 42px;
+    height: 42px;
+    border-radius: 24px;
+}
+.profileRow{
+    display: flex;
+    margin-left: 20px;
+}
+.profileSubtitle{
+    font-size: 10px;
+    opacity: 0.5;
+    margin: 0px;
+}
+.profileTitle{
+    margin: 0px;
+}
+.profileText{
+    margin-left: 10px;
+}
+.memberImage{
+    width: 64px;
+    height: 64px;
+    border-radius: 48px;
+}
+.memberRow{
+    display: flex;
+    margin: 20px 0 20px 0;
+}
+.memberSubtitle{
+    font-size: 12px;
+    opacity: 0.5;
+    margin: 0px;
+}
+.memberTitle{
+    margin: 12px 0px 0px 0px;
+    font-size: 14px;
+}
+.memberText{
+    margin-left: 10px;
+}
+#add-member {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+}
+.add-member-button{
+    border: 1px solid #79BCE7;
+    width: 214px;
+    height: 45px;
+    align-items: center;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #79BCE7;
+    background-color: #191919;
+    cursor: pointer;
+    margin-top: 20px;
 }

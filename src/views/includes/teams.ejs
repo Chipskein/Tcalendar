@@ -6,9 +6,11 @@
                     <p><%=team.name%></p>
                 </div>
             <% } else { %>
-                <div class="team-box">
-                    <p><%=team.name%></p>
-                </div>
+                <form action="" class="team-box" method="get">
+                    <button>
+                        <%=team.name%>
+                    </button>
+                </form>
             <% } %>
         <% } %> 
     </div>

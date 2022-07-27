@@ -26,12 +26,39 @@
                 <img class="calendarIcon" src="/imgs/calendar.png">
                 <p class="TcalendarText">Tcalendar</p>
             </div>
-            <p class="TcalendarText">Membros</p>
-            <div class="lines">
-                
-            </div>
-            <div class="profile">
 
+            <p class="TcalendarText">Membros (2)</p>
+            <div class="memberRow">
+                <img src="<%= user.img %>" alt="" class="memberImage">
+                <div class="memberText">
+                    <p class="memberTitle"><%= user.name %></p>
+                    <p class="memberSubtitle">Programer</p>
+                </div>
+            </div>
+            <button class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
+            <div id="add-member">
+                <div class="teams-create-card">
+                    <form action="/teams" method="post">
+                        <h3>Adicionar membro</h3>
+                        <label for="name">Email:</label>
+                        <input class="input-name" type="text" name="name" id="">
+                        <input type="hidden" name="email" id="" value="">
+                        <div class="teams-button-container">
+                            <div class="teams-button cancel" onclick="toggleModalMember()"><p>Cancelar</p></div>
+                            <input class="teams-button" type="submit" value="Adicionar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <% console.log(user.teams[0]) %> 
+            <div class="profile">
+                <div class="profileRow">
+                    <img src="<%= user.img %>" alt="" class="userImage">
+                    <div class="profileText">
+                        <p class="profileTitle"><%= user.name %></p>
+                        <p class="profileSubtitle">Programer - <%= user.enterprise.name %> </p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -48,6 +75,6 @@
         </form>
     <% } %>
     <a href="/teams"> criar time </a> -->
-
+    <script src="/js/member.js"></script>
 </body>
 </html>
