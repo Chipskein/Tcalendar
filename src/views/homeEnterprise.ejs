@@ -28,6 +28,7 @@
             </div>
 
             <p class="TcalendarText">Membros (2)</p>
+            <% user.teams.find(i=>i.id == selectedTeam).Teams_users %> 
             <div class="memberRow">
                 <img src="<%= user.img %>" alt="" class="memberImage">
                 <div class="memberText">
@@ -35,7 +36,7 @@
                     <p class="memberSubtitle">Programer</p>
                 </div>
             </div>
-            <button class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
+            <button type="button" class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
             <div id="add-member">
                 <div class="teams-create-card">
                     <form action="/teams" method="post">
@@ -50,7 +51,7 @@
                     </form>
                 </div>
             </div>
-            <% console.log(user.teams[0]) %> 
+            <% console.log(user.teams.find(i=>i.id == selectedTeam).Teams_users.dataValues) %> 
             <div class="profile">
                 <div class="profileRow">
                     <img src="<%= user.img %>" alt="" class="userImage">

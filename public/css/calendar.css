@@ -29,6 +29,8 @@
 #calendar-month-name, #calendar-year-number {
     font-size: 2em;
     font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .calendar-weekNames {
@@ -60,7 +62,8 @@
     /* margin-bottom: 1vh; */
     /* margin-right: 1vw; */
     justify-content: center;
-    align-items: center;
+    align-self: center;
+    cursor: pointer;
 }
 .today {
     background-color: #79BCE7;

@@ -6,7 +6,7 @@
                     <p><%=team.name%></p>
                 </div>
             <% } else { %>
-                <form action="" class="team-box" method="get">
+                <form action="/enterprises/home/<%= team.id %>" class="team-box" method="get">
                     <button>
                         <%=team.name%>
                     </button>
