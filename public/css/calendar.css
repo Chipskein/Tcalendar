@@ -68,3 +68,73 @@
 .today {
     background-color: #79BCE7;
 }
+
+#schedule-create-bg {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.schedule-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.schedule-create-card {
+    background-color: #79BCE7;
+    width: 652px;
+    /* height: 417px; */
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.schedule-create-card form {
+    width: 90%;
+    flex-direction: column;
+}
+
+.schedule-create-card form h3 {
+    font-size: 1.5em;
+}
+
+.input-name {
+    width: 100%;
+    border-radius: 5px;
+    border-color: transparent;
+    margin-top: 1vh;
+    padding: 1%;
+}
+
+.schedule-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.schedule-button {
+    width: 45%;
+    border: 1px solid transparent;
+    background-color: #000;
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.cancel {
+    background-color: transparent !important;
+    color: #000 !important;
+    border-color: #000;
+}

@@ -41,17 +41,27 @@ class SchduleController{
         return res.send('TESTANDo');
     }
     static async create(req,res){
-        const { id_team,id_user,date }=req.body;
-        if(await isDateAvaliable(id_team,date)&&isAValidDate(date)){
-            const schedule=await Schedules.create({
-                id_team,
-                id_user,
-                date
-            })
-            //enviar notifcação para todos do time
-            return res.status(200).json(schedule);
+        const { id_team, id_user, date, time }=req.body;
+        console.log('date ',date)
+        console.log('time ',time)
+        let formatedDate = new Date(date+" "+time+":00")
+        console.log('formatedDate ',formatedDate)
+        try {
+            let testee = await isDateAvaliable(id_team, formatedDate);
+            console.log('testee '+testee);
+            if(await isDateAvaliable(id_team, formatedDate) && isAValidDate(formatedDate)){
+                const schedule=await Schedules.create({
+                    id_team,
+                    id_user,
+                    date: formatedDate
+                })
+                //enviar notifcação para todos do time
+                return res.status(200).json(schedule);
+            }
+            return res.status(200).json('Data não disponivel');
+        } catch (error) {
+
         }
-        return res.status(200).json('Data não disponivel');
     }
 }
 module.exports=SchduleController;

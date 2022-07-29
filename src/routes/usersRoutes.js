@@ -17,6 +17,7 @@ router.get('/resetpassword',verifyHasNoToken,isNotLogged,UserController.showRese
 router.get('/active',verifyHasNoToken,isNotLogged,UserController.activeUser);
 
 router.get('/update',verifyToken,UserController.ShowUpdate);
+
 //logged
 router.get('/home',verifyToken,isLogged,UserController.showHome);
 router.get('/logoff',verifyToken,isLogged,UserController.logoff);

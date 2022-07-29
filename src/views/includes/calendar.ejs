@@ -27,4 +27,30 @@
     </div>
 </div>
 
+<div id="schedule-create-bg">
+    <div class="schedule-create-card">
+        <form action="/schedules" method="post" id="schedule-form">
+            <div class="schedule-form-header">
+                <h3>Reunião - <%= teams[0].name %></h3>
+                <p id="schedule-form-date"></p>
+            </div>
+            <label for="description">Descrição:</label>
+            <textarea class="input-name" name="description"></textarea>
+
+            <label for="time">Horário:</label>
+            <input class="input-name" type="time" name="time" id="schedule-form-datetime">
+
+            <div id="schedule-hidden-inputs"></div>
+            
+            <input type="hidden" name="id_user" value="<%= user.id %>">
+            <input type="hidden" name="id_team" value="<%= teams[0].id %>">
+
+            <div class="schedule-button-container">
+                <div class="schedule-button cancel" onclick="toggleModal()"><p>Cancelar</p></div>
+                <input class="schedule-button" type="submit" value="Criar">
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="/js/calendar.js"></script>

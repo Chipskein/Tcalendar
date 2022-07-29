@@ -87,7 +87,7 @@ const generateDays = (date) => {
         newDaysACommin.push(obj);
     })
 
-    console.log('newDaysACommin[0].week ',newDaysACommin[0].week)
+    // console.log('newDaysACommin[0].week ',newDaysACommin[0].week)
     let firstDayWeek = newDaysACommin[0].week;
     if(firstDayWeek != 0){
         for(let i = 0; i < firstDayWeek; i++){
@@ -95,7 +95,7 @@ const generateDays = (date) => {
         }
     }
 
-    console.log('newDaysACommin ',newDaysACommin);
+    // console.log('newDaysACommin ',newDaysACommin);
     days = newDaysACommin;
 }
 
@@ -104,9 +104,33 @@ const renderCalendar = (days) => {
     divCalendarMonth.innerHTML = months[currentMonth].txt;
     divCalendarYear.innerHTML = currentYear;
 
-    days.map(item => {                
-        divCalendarWeek.innerHTML += `<div class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}"><p>${item.day != null ? item.day : ''}</p></div>`;
+    days.map(item => {     
+        divCalendarWeek.innerHTML += `
+            <div 
+                class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}" 
+                onClick="addSchedule('${currentYear}-${currentMonth}-${item.day}')">
+                <p>${item.day != null ? item.day : ''}</p>
+            </div>`;
     })
+}
+
+const addSchedule = (date) => {
+    console.log('date ',date);
+    let form = document.getElementById('schedule-form');
+    let hiddeninputs = document.getElementById('schedule-hidden-inputs');
+
+    hiddeninputs.innerHTML = `<input type="hidden" id="schedule-form-inputdate" name="date" value="${date}">`;
+       
+    toggleModal();
+}
+
+let displayModal = false;
+let modal = document.getElementById('schedule-create-bg');
+
+const toggleModal = () => {
+    displayModal = !displayModal;
+    if(displayModal) modal.style.display = 'flex';
+    else modal.style.display = 'none';
 }
 
 const nextMonth = () => {
@@ -117,13 +141,10 @@ const nextMonth = () => {
         currentMonth++;
     }
 
-    // divCalendarMonth.innerHTML = months[currentMonth].txt;
-    // divCalendarYear.innerHTML = currentYear;
     let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
     generateDays(newDate);
     renderCalendar(days)
 }
-
 const prevMonth = () => {
     if(currentMonth-1 == -1) {
         currentMonth = 11;
@@ -132,8 +153,6 @@ const prevMonth = () => {
         currentMonth--;
     }
     
-    // divCalendarMonth.innerHTML = months[currentMonth].txt;
-    // divCalendarYear.innerHTML = currentYear;
     let newDate = new Date(`${currentYear}-${currentMonth+1}-1`);
     generateDays(newDate);
     renderCalendar(days)

@@ -25,6 +25,7 @@ app.use('/users',usersRoutes);
 app.use('*',(req,res)=>{
     return res.redirect('/users/home');
 });
+
 app.listen(port,()=>console.log(`Started Server on ${port}`));
 
 
