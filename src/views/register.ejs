@@ -23,16 +23,16 @@
         </div>
         <div class="aside">
             <p class="form-title">Cadastrar</p>
-            <form action="/users/register" method="post" class="form">
+            <form action="/users/register" method="post" class="form" enctype="multipart/form-data">
                 <div id="userimg" class="userimg-container"></div>
 
                 <p>
-                    <label for="avatar" class="input-image-label">Clique Aqui</label>
+                    <label for="image" class="input-image-label">Clique Aqui</label>
                     <input
                         type="file"
                         class="input-image-input"
-                        id="avatar"
-                        name="avatar"
+                        id="image"
+                        name="image"
                         accept="image/png, image/jpeg,image/gif"
                         />
                     e faça o upload.
@@ -53,7 +53,7 @@
         </div>
     </div>
     <script>
-        const avatar = document.getElementById("avatar");
+        const avatar = document.getElementById("image");
         avatar.onchange = evt => {
             const [file] = avatar.files;
             console.log('file ',file)

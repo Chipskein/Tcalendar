@@ -12,8 +12,6 @@ class UserController{
         const { user }=req.data;
         const { enterprise }=user;
         if(enterprise) return res.redirect('/enterprises/home');
-        
-        //return res.render('home',{user,enterprise});
         return res.redirect('/enterprises/');
     }
     static async showLogin(req,res){
@@ -134,12 +132,9 @@ class UserController{
     }
     static async update(req,res){
         try{
-            // console.log('CARALHO MENOR')
             const updateDataRow={}
             let {name,email,password} =req.body
             const file=req.file;
-            // console.log('req ',req)
-            // console.log('file ',file)
             if(password) updateDataRow.password=hashPassword(password);
             if(name) updateDataRow.name=name;
             if(email) updateDataRow.email=email;
