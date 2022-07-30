@@ -76,7 +76,7 @@
 .teams-create-card {
     background-color: #79BCE7;
     width: 652px;
-    height: 323px;
+    /* height: 323px; */
     display: flex;
     justify-content: center;
     border-radius: 10px;
@@ -115,7 +115,8 @@
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 12vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 .cancel {

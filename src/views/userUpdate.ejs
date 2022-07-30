@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,18 +25,18 @@
             <form action="/users/update" method="post" class="form">
                 <div id="userimg" class="userimg-container"></div>
                 <p>
-                    <label for="avatar" class="input-image-label">Clique Aqui</label>
+                    <label for="image" class="input-image-label">Clique Aqui</label>
                     <input
                         type="file"
                         class="input-image-input"
-                        id="avatar"
-                        name="avatar"
+                        id="image"
+                        name="image"
                         accept="image/png, image/jpeg,image/gif"
                         />
                     e faça o upload.
                 </p>
-                <input type="text" class="input" name='name' placeholder="Nome" required>
-                <input type="password" class="input" name='password' placeholder="Senha" required>
+                <input type="text" class="input" name='name' placeholder="Nome">
+                <input type="password" class="input" name='password' placeholder="Senha">
                 <input type="submit" class="button" value="Atualizar">
             </form>
             <% if(err){ %>
@@ -44,7 +45,7 @@
         </div>
     </div>
     <script>
-        const avatar = document.getElementById("avatar");
+        const avatar = document.getElementById("image");
         avatar.onchange = evt => {
             const [file] = avatar.files;
             console.log('file ',file)

@@ -54,10 +54,13 @@ class TeamsController{
     }
     static async inviteUserToTeam(req,res,next){
         try{
+            console.log('inviteUserToTeam')
             const teamId = req.params.id;
             const { email } = req.body;
+            console.log('email ',email)
             const  userAdmin  = req.data.user;
             const { enterprise } = userAdmin;
+            console.log('enterprise ',enterprise)
             let team=await Teams.findOne({where:{id:teamId}});
             team = team ? team.dataValues:false
             if(!team) throw Error('Time não existe');
@@ -90,10 +93,6 @@ class TeamsController{
         let team = await Teams.findOne({where:{id}});
         team = team.dataValues;
         return res.render("homeTeams",{team});
-    }
-    static async getPartiticapnts(req,res,next){
-        
-    }
-    
+    }   
 }
 module.exports=TeamsController;

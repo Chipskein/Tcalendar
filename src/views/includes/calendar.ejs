@@ -27,6 +27,7 @@
     </div>
 </div>
 
+<% if(teams.lenght > 0) { %>
 <div id="schedule-create-bg">
     <div class="schedule-create-card">
         <form action="/schedules" method="post" id="schedule-form">
@@ -52,5 +53,6 @@
         </form>
     </div>
 </div>
+<% } %>
 
 <script src="/js/calendar.js"></script>

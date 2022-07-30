@@ -1,8 +1,8 @@
-let displayModal = false;
-let modal = document.getElementById('add-member');
+let displayModalMember = false;
+let modalMember = document.getElementById('add-member');
 
 const toggleModalMember = () => {
-    displayModal = !displayModal;
-    if(displayModal) modal.style.display = 'flex';
-    else modal.style.display = 'none';
+    displayModalMember = !displayModalMember;
+    if(displayModalMember) modalMember.style.display = 'flex';
+    else modalMember.style.display = 'none';
 }

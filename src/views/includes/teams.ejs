@@ -1,7 +1,7 @@
 <div class="teams-container">
     <div class="teams-box-container">
         <% for (let team of teams){ %> 
-            <% if(team.id == selectedTeam){ %>
+            <% if(selectedTeam && team.id == selectedTeam.id){ %>
                 <div class="team-box selected">
                     <p><%=team.name%></p>
                 </div>
@@ -15,7 +15,7 @@
         <% } %> 
     </div>
 
-    <div class="teams-add" onclick="toggleModal()">
+    <div class="teams-add" onclick="toggleModalTeam()">
         <p>+</p>
     </div>
 </div>
@@ -26,10 +26,11 @@
             <h3>Criar Equipe</h3>
             <label for="name">Nome:</label>
             <input class="input-name" type="text" name="name" id="">
-            <input type="hidden" name="description" id="" value="">
+            <label for="description">Descrição:</label>
+            <input class="input-name" type="text" name="description" id="" value="">
 
             <div class="teams-button-container">
-                <div class="teams-button cancel" onclick="toggleModal()"><p>Cancelar</p></div>
+                <div class="teams-button cancel" onclick="toggleModalTeam()"><p>Cancelar</p></div>
                 <input class="teams-button" type="submit" value="Criar">
             </div>
         </form>

@@ -175,3 +175,8 @@ a.black {
 .input-image-input { 
     display: none;
 }
+
+.text-activate {
+    margin-left: 3vw;
+    margin-right: 3vw;
+}

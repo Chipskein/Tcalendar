@@ -1,4 +1,5 @@
 const { Users } = require("../models/usersModel");
+const { Teams_users } = require("../models/teams_usersModel");
 const { Enterprises } = require("../models/enterprisesModel");
 const { Enterprise_users } = require("../models/enterprise_usersModel");
 class EnterpriseController{
@@ -10,11 +11,18 @@ class EnterpriseController{
         const { enterprise,teams }=user;
         let owner= (user.id==enterprise.owner) ? true:false; 
         const { id }=req.params;
-        let selectedTeam = teams.length> 0 ? teams[0].id:false;
+        let selectedTeam = null;
+        let members = [];
         if(id){
-            selectedTeam = teams.length> 0 ? id:false;
+            selectedTeam = teams.find(item => item.id == id);
+            members = await Teams_users.findAll({ where: { id_team: id }, include: Users});
         }
-        return res.render('homeEnterprise',{user,enterprise,teams, selectedTeam,owner});
+        console.log('user ',user);
+        // console.log('teams ',teams);
+        // console.log('selectedTeam ',selectedTeam);
+        // console.log('members ',members[0].dataValues.Users[0].dataValues.name);
+
+        return res.render('homeEnterprise',{ user, enterprise, teams, selectedTeam, members, owner });
     }
     static async createEnterprise(req,res){
         const user=req.data.user;

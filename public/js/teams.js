@@ -1,8 +1,8 @@
-let displayModal = false;
-let modal = document.getElementById('teams-create-bg');
+let displayModalTeam = false;
+let modalTeam = document.getElementById('teams-create-bg');
 
-const toggleModal = () => {
-    displayModal = !displayModal;
-    if(displayModal) modal.style.display = 'flex';
-    else modal.style.display = 'none';
+const toggleModalTeam = () => {
+    displayModalTeam = !displayModalTeam;
+    if(displayModalTeam) modalTeam.style.display = 'flex';
+    else modalTeam.style.display = 'none';
 }

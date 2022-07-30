@@ -61,6 +61,10 @@ const months = [
     {id: 11, txt: 'Dezembro', days: 31},
 ];
 
+var teams = teams;
+
+console.log('teams ',teams)
+
 const getAllDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1);
 
@@ -76,7 +80,7 @@ const getAllDaysInMonth = (year, month) => {
 
 const generateDays = (date) => {
     let datesss = getAllDaysInMonth(date.getFullYear(), date.getMonth());
-    console.log(datesss);
+    // console.log(datesss);
     let newDaysACommin = [];
     
     datesss.map(day => {
@@ -120,7 +124,7 @@ const addSchedule = (date) => {
     let hiddeninputs = document.getElementById('schedule-hidden-inputs');
 
     hiddeninputs.innerHTML = `<input type="hidden" id="schedule-form-inputdate" name="date" value="${date}">`;
-       
+    
     toggleModal();
 }
 

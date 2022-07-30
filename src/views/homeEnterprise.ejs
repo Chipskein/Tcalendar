@@ -27,39 +27,55 @@
                 <p class="TcalendarText">Tcalendar</p>
             </div>
 
-            <p class="TcalendarText">Membros (2)</p>
-            <% user.teams.find(i=>i.id == selectedTeam).Teams_users %> 
-            <div class="memberRow">
-                <img src="<%= user.img %>" alt="" class="memberImage">
-                <div class="memberText">
-                    <p class="memberTitle"><%= user.name %></p>
-                    <p class="memberSubtitle">Programer</p>
-                </div>
-            </div>
-            <button type="button" class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
-            <div id="add-member">
-                <div class="teams-create-card">
-                    <form action="/teams" method="post">
-                        <h3>Adicionar membro</h3>
-                        <label for="name">Email:</label>
-                        <input class="input-name" type="text" name="name" id="">
-                        <input type="hidden" name="email" id="" value="">
-                        <div class="teams-button-container">
-                            <div class="teams-button cancel" onclick="toggleModalMember()"><p>Cancelar</p></div>
-                            <input class="teams-button" type="submit" value="Adicionar">
+            <% if(selectedTeam) { %>
+                <p class="TcalendarText">Membros (<%= members.length %>)</p>
+                
+                <% for(let i = 0; i < members.length ; i++){ %>
+                    <div class="memberRow">
+                        <img src="<%= members[i].dataValues.Users[0].dataValues.img %>" alt="" class="memberImage">
+                        <div class="memberText">
+                            <p class="memberTitle">
+                                <%= members[i].dataValues.Users[0].dataValues.name %> 
+                                <% if(teams.find(item => selectedTeam.id == item.id).admin == members[i].dataValues.Users[0].dataValues.id ) { %>
+                                    - Admin
+                                <% } %>
+                            </p>
+                            <p class="memberSubtitle"><%= members[i].dataValues.Users[0].dataValues.email %></p>
+                            <!-- members[0].dataValues.Users[0].dataValues.name -->
                         </div>
-                    </form>
-                </div>
-            </div>
-            <% console.log(user.teams.find(i=>i.id == selectedTeam).Teams_users.dataValues) %> 
-            <div class="profile">
-                <div class="profileRow">
-                    <img src="<%= user.img %>" alt="" class="userImage">
-                    <div class="profileText">
-                        <p class="profileTitle"><%= user.name %></p>
-                        <p class="profileSubtitle">Programer - <%= user.enterprise.name %> </p>
+                    </div>
+                <% } %>
+
+                <% if(teams.find(item => selectedTeam.id == item.id).admin == user.id ) { %>
+                    <button type="button" class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
+                <% } %>
+            
+                <div id="add-member">
+                    <div class="teams-create-card">
+                        <form action="/teams/<%= selectedTeam.id %>/invite" method="post">
+                            <h3>Adicionar membro</h3>
+                            <label for="email">Email:</label>
+                            <input class="input-name" type="text" name="email" id="">
+                            <!-- <input type="hidden" name="email" id="" value=""> -->
+                            <div class="teams-button-container">
+                                <div class="teams-button cancel" onclick="toggleModalMember()"><p>Cancelar</p></div>
+                                <input class="teams-button" type="submit" value="Adicionar">
+                            </div>
+                        </form>
                     </div>
                 </div>
+            <% } %>
+
+            <div class="profile">
+                <a href="/users/update">
+                    <div class="profileRow">
+                        <img src="<%= user.img %>" alt="" class="userImage">
+                        <div class="profileText">
+                            <p class="profileTitle"><%= user.name %></p>
+                            <p class="profileSubtitle"><%= user.email %> - <%= user.enterprise.name %> </p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
 
