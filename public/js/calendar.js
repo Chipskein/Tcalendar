@@ -7,44 +7,12 @@ let date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
-console.log('currentMonth ',currentMonth);
-console.log('currentYear ',currentYear);
+// console.log('currentMonth ',currentMonth);
+// console.log('currentYear ',currentYear);
+
+console.log('selectedTeam ',selectedTeam);
 
 let days = [];
-let events = [
-    { 
-        id: 1,
-        team: 1,
-        title: 'Reunião do IF',
-        description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd',
-        date: '2022-07-26T00:16:56.271Z',
-        color: '#E77979'
-    },
-    { 
-        id: 2,
-        team: 1,
-        title: 'Reunião do IF',
-        description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd',
-        date: '2022-07-26T00:16:56.271Z',
-        color: '#E77979'
-    },
-    { 
-        id: 3,
-        team: 1,
-        title: 'Reunião do IF',
-        description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd',
-        date: '2022-07-26T00:16:56.271Z',
-        color: '#E77979'
-    },
-    { 
-        id: 4,
-        team: 1,
-        title: 'Reunião do IF',
-        description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd',
-        date: '2022-07-26T00:16:56.271Z',
-        color: '#E77979'
-    },
-];
 
 const months = [
     {id: 0, txt: 'Janeiro', days: 31},
@@ -61,10 +29,6 @@ const months = [
     {id: 11, txt: 'Dezembro', days: 31},
 ];
 
-var teams = teams;
-
-console.log('teams ',teams)
-
 const getAllDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1);
 
@@ -80,7 +44,6 @@ const getAllDaysInMonth = (year, month) => {
 
 const generateDays = (date) => {
     let datesss = getAllDaysInMonth(date.getFullYear(), date.getMonth());
-    // console.log(datesss);
     let newDaysACommin = [];
     
     datesss.map(day => {
@@ -91,7 +54,6 @@ const generateDays = (date) => {
         newDaysACommin.push(obj);
     })
 
-    // console.log('newDaysACommin[0].week ',newDaysACommin[0].week)
     let firstDayWeek = newDaysACommin[0].week;
     if(firstDayWeek != 0){
         for(let i = 0; i < firstDayWeek; i++){
@@ -99,8 +61,22 @@ const generateDays = (date) => {
         }
     }
 
-    // console.log('newDaysACommin ',newDaysACommin);
     days = newDaysACommin;
+}
+
+const showEvent = (event) => {
+    console.log('event ',event)
+    let title = document.getElementById('schedule-title');
+    let datetime = document.getElementById('schedule-date');
+    let description = document.getElementById('schedule-descriptionn');
+
+    let time = event.time.split(':');
+
+    title.innerHTML = event.title;
+    datetime.innerHTML = time[0]+":"+time[1]+" hrs";
+    description.innerHTML = event.description;
+
+    toggleModal2();
 }
 
 const renderCalendar = (days) => {
@@ -108,12 +84,22 @@ const renderCalendar = (days) => {
     divCalendarMonth.innerHTML = months[currentMonth].txt;
     divCalendarYear.innerHTML = currentYear;
 
-    days.map(item => {     
+    days.map(item => {
+        let eventsString = "";
+        events.filter(item2 => new Date(item2.date).toISOString().split('T')[0] == new Date(item.date).toISOString().split('T')[0]).map(item2 => {
+            eventsString += `<hr class='calendar-event-btn' style='border-color: ${item2.color}' onclick='showEvent(${JSON.stringify(item2)})'></hr>`;
+        })
+        
         divCalendarWeek.innerHTML += `
             <div 
-                class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}" 
-                onClick="addSchedule('${currentYear}-${currentMonth}-${item.day}')">
-                <p>${item.day != null ? item.day : ''}</p>
+                class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}" >
+                <div onClick="addSchedule('${currentYear}-${currentMonth}-${item.day}')">
+                    <p>${item.day != null ? item.day : ''}</p>
+                </div>
+
+                <div class="calendar-events">
+                    ${eventsString}
+                </div>
             </div>`;
     })
 }
@@ -125,16 +111,25 @@ const addSchedule = (date) => {
 
     hiddeninputs.innerHTML = `<input type="hidden" id="schedule-form-inputdate" name="date" value="${date}">`;
     
-    toggleModal();
+    toggleModal1();
 }
 
-let displayModal = false;
+let displayModal1 = false;
 let modal = document.getElementById('schedule-create-bg');
+let displayModal2 = false;
+let modal2 = document.getElementById('schedule-show-bg');
 
-const toggleModal = () => {
-    displayModal = !displayModal;
-    if(displayModal) modal.style.display = 'flex';
+const toggleModal1 = () => {
+    displayModal1 = !displayModal1;
+    console.log('modal ',modal)
+    if(displayModal1) modal.style.display = 'flex';
     else modal.style.display = 'none';
+}
+
+const toggleModal2 = () => {
+    displayModal2 = !displayModal2;
+    if(displayModal2) modal2.style.display = 'flex';
+    else modal2.style.display = 'none';
 }
 
 const nextMonth = () => {
@@ -149,6 +144,7 @@ const nextMonth = () => {
     generateDays(newDate);
     renderCalendar(days)
 }
+
 const prevMonth = () => {
     if(currentMonth-1 == -1) {
         currentMonth = 11;
@@ -170,6 +166,7 @@ const nextYear = () => {
     generateDays(newDate);
     renderCalendar(days)
 }
+
 const prevYear = () => {
     currentYear--;
     divCalendarYear.innerHTML = currentYear;

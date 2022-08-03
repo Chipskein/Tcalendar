@@ -19,7 +19,7 @@ class EnterpriseController{
         }
         console.log('user ',user);
         // console.log('teams ',teams);
-        // console.log('selectedTeam ',selectedTeam);
+        console.log('selectedTeam ',selectedTeam);
         // console.log('members ',members[0].dataValues.Users[0].dataValues.name);
 
         return res.render('homeEnterprise',{ user, enterprise, teams, selectedTeam, members, owner });

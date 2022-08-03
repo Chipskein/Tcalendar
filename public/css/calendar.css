@@ -10,7 +10,15 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 1vh;
+    overflow-y: scroll;
+    padding-bottom: 1%;
+
 }
+.calendar::-webkit-scrollbar { width: 0.5vw; } 
+.calendar::-webkit-scrollbar-track { background: #191919; } 
+.calendar::-webkit-scrollbar-thumb { border-radius: 5px; background: #292B2F; } 
+.calendar::-webkit-scrollbar-thumb:hover { background: #292B2F; }
+
 .calendar-selectors {
     display: flex;
     width: 88%;
@@ -47,7 +55,7 @@
 .calendar-week {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 10vh 10vh 10vh 10vh 10vh;
+    /* grid-template-rows: 10vh 10vh 10vh 10vh 10vh; */
     width: 75vw;
 }
 .calendar-day {
@@ -58,18 +66,39 @@
     border-radius: 5px;
     /* border: 1px solid #292B2F; */
     /* width: 7vw; */
-    height: 9vh;
+    height: 13vh;
     /* margin-bottom: 1vh; */
     /* margin-right: 1vw; */
-    justify-content: center;
     align-self: center;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
 }
 .today {
     background-color: #79BCE7;
 }
 
-#schedule-create-bg {
+.calendar-events {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar-event-btn {
+    width: 40%;
+    border-width: 6px;
+    border-radius: 10px;
+    border-style: solid;
+}
+
+#schedule-form {
+    width: 95%;
+}
+
+#schedule-create-bg, #schedule-show-bg {
     display: none;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
@@ -79,6 +108,19 @@
     right: 0;
     justify-content: center;
     align-items: center;
+}
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+}
+
+#schedule-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+#schedule-date {
+    margin-left: 20px;
 }
 
 .schedule-form-header {
