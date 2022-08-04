@@ -9,17 +9,20 @@
                          "footer   aside"
     ;
     grid-template-columns: 82vw 18vw;
-    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-rows: 10vh 80vh 9vh;
 }
 .aside {
     grid-area: aside;
     background-color: #191919;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 20px;
-
+    display: grid;
+    height: 100vh;
+    grid-template-rows: 90vh 10vh;
+    /* flex-direction: column; */
+    /* align-items: flex-start; */
+    /* padding: 20px; */
+}
+.members {
+    padding-left: 30px;
 }
 .body {
     grid-area: body;
@@ -51,12 +54,8 @@
 }
 .profile {
     background-color: #292B2F;
-    position:absolute;
+    width: 100%;
     padding: 25px 0px 25px 0px;
-    bottom: 0px;
-    width: 330px;
-    margin-left: -20px;
-    z-index: 100;
 }
 .profile a {
     color: #fff;

@@ -24,6 +24,14 @@ class Schedules extends Model {
                 type:DataTypes.DATE,
                 allowNull:false
             },
+            title:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            description:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
         }
         super.init(tableDefinition,tableConfig);
     }

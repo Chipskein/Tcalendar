@@ -1,6 +1,15 @@
+<% if (teams) { %>
+    <script>
+        var teams = JSON.parse('<%- teams %>');
+        console.log('teams ',teams)
+    </script>
+<% } %>
+    <script>
+        var selectedTeam = null;
+    </script>
 <% if (selectedTeam) { %>
     <script>
-        var selectedTeam = {
+        selectedTeam = {
             id: '<%- selectedTeam.id %>',
             id_enterprise: '<%- selectedTeam.id_enterprise %>',
             admin: '<%- selectedTeam.admin %>',
@@ -10,19 +19,31 @@
             createdAt: '<%- selectedTeam.createdAt %>',
             updatedAt: '<%- selectedTeam.updatedAt %>',
         };
-
-        var events = [
-            { team: 1, title: 'Reunião de Daily', description: "Lorem Ipsumas asd asdas das das s", date: '2022-08-26', time: '16:00:00', color: '#E77979' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#8F79E7' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#79E7A5' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-02', time: '16:00:00', color: '#E79A79' },
-            { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-02', time: '16:00:00', color: '#B0E779' },
-        ];
     </script>
 <% } %>
+
+<% if (schedules) { %>
+    <script>
+        var schedules = JSON.parse('<%- schedules %>');
+        console.log('schedules ',schedules)
+        schedules.map(item => {
+            console.log('item ',item)
+        })
+    </script>
+<% } %>
+
+<script>
+    var events = [
+        { team: 1, title: 'Reunião de Daily', description: "Lorem Ipsumas asd asdas das das s", date: '2022-08-26', time: '16:00:00', color: '#E77979' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#8F79E7' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#B0E779' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-26', time: '16:00:00', color: '#79E7A5' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-02', time: '16:00:00', color: '#E79A79' },
+        { team: 1, title: 'Reunião do IF', description: 'Reunioão basicona asdasdsadas asdasd as dasd asd asd asdasdasdas das dasd asd', date: '2022-08-02', time: '16:00:00', color: '#B0E779' },
+    ];
+</script>
 
 
 <div class="calendar">
@@ -58,6 +79,9 @@
     <div class="schedule-create-card">
         <div id="schedule-form">
             <div class="schedule-header">
+                <% if(!selectedTeam) { %>
+                    <h3 id="schedule-group"></h3>                        
+                <% } %>
                 <h3 id="schedule-title"></h3>
                 <p id="schedule-date"></p>
             </div>
@@ -65,22 +89,23 @@
             <p id="schedule-descriptionn"></p>
 
             <div class="schedule-button-container">
-                <div class="schedule-button" onclick="toggleModal1()"><p>Marcar outra</p></div>
+                <% if(selectedTeam) { %>
+                    <div class="schedule-button" onclick="toggleModal1()"><p>Marcar outra</p></div>
+                <% } %>
                 <div class="schedule-button cancel" onclick="toggleModal2()"><p>Fechar</p></div>
             </div>
         </div>
     </div>
 </div>
 
-<% if(teams.lenght > 0) { %>
+<% if(selectedTeam) { %>
     <div id="schedule-create-bg">
         <div class="schedule-create-card">
             <form action="/schedules" method="post" id="schedule-form">
-                <div class="schedule-form-header">
-                    <h3>Reunião - <%= teams[0].name %></h3>
-                    <p id="schedule-form-date"></p>
-                </div>
-                <label for="description">Descrição:</label>
+                <label for="description">Título:</label>
+                <input class="input-name" type="text" name="title">
+
+                <label for="description">Descrição: </label>
                 <textarea class="input-name" name="description"></textarea>
 
                 <label for="time">Horário:</label>
@@ -89,7 +114,7 @@
                 <div id="schedule-hidden-inputs"></div>
                 
                 <input type="hidden" name="id_user" value="<%= user.id %>">
-                <input type="hidden" name="id_team" value="<%= teams[0].id %>">
+                <input type="hidden" name="id_team" value="<%= selectedTeam.id %>">
 
                 <div class="schedule-button-container">
                     <div class="schedule-button cancel" onclick="toggleModal1()"><p>Cancelar</p></div>

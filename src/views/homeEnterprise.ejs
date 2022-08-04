@@ -22,50 +22,51 @@
         <%- include('includes/calendar') %>
 
         <div class="aside">
-            <div class="Tcalendar">
-                <img class="calendarIcon" src="/imgs/calendar.png">
-                <p class="TcalendarText">Tcalendar</p>
-            </div>
-
-            <% if(selectedTeam) { %>
-                <p class="TcalendarText">Membros (<%= members.length %>)</p>
+            <div class="members">
+                <div class="Tcalendar">
+                    <img class="calendarIcon" src="/svgs/logo.svg">
+                    <p class="TcalendarText">Tcalendar</p>
+                </div>
+    
+                <% if(selectedTeam) { %>
+                    <p class="TcalendarText">Membros (<%= members.length %>)</p>
+                    
+                    <% for(let i = 0; i < members.length ; i++){ %>
+                        <div class="memberRow">
+                            <img src="<%= members[i].dataValues.Users[0].dataValues.img %>" alt="" class="memberImage">
+                            <div class="memberText">
+                                <p class="memberTitle">
+                                    <%= members[i].dataValues.Users[0].dataValues.name %> 
+                                    <% if(JSON.parse(teams).find(item => selectedTeam.id == item.id).admin == members[i].dataValues.Users[0].dataValues.id ) { %>
+                                        - Admin
+                                    <% } %>
+                                </p>
+                                <p class="memberSubtitle"><%= members[i].dataValues.Users[0].dataValues.email %></p>
+                                <!-- members[0].dataValues.Users[0].dataValues.name -->
+                            </div>
+                        </div>
+                    <% } %>
+    
+                    <% if(JSON.parse(teams).find(item => selectedTeam.id == item.id).admin == user.id ) { %>
+                        <button type="button" class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
+                    <% } %>
                 
-                <% for(let i = 0; i < members.length ; i++){ %>
-                    <div class="memberRow">
-                        <img src="<%= members[i].dataValues.Users[0].dataValues.img %>" alt="" class="memberImage">
-                        <div class="memberText">
-                            <p class="memberTitle">
-                                <%= members[i].dataValues.Users[0].dataValues.name %> 
-                                <% if(teams.find(item => selectedTeam.id == item.id).admin == members[i].dataValues.Users[0].dataValues.id ) { %>
-                                    - Admin
-                                <% } %>
-                            </p>
-                            <p class="memberSubtitle"><%= members[i].dataValues.Users[0].dataValues.email %></p>
-                            <!-- members[0].dataValues.Users[0].dataValues.name -->
+                    <div id="add-member">
+                        <div class="teams-create-card">
+                            <form action="/teams/<%= selectedTeam.id %>/invite" method="post">
+                                <h3>Adicionar membro</h3>
+                                <label for="email">Email:</label>
+                                <input class="input-name" type="text" name="email" id="">
+                                <!-- <input type="hidden" name="email" id="" value=""> -->
+                                <div class="teams-button-container">
+                                    <div class="teams-button cancel" onclick="toggleModalMember()"><p>Cancelar</p></div>
+                                    <input class="teams-button" type="submit" value="Adicionar">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 <% } %>
-
-                <% if(teams.find(item => selectedTeam.id == item.id).admin == user.id ) { %>
-                    <button type="button" class="add-member-button" onclick="toggleModalMember()">Adicionar participante</button>
-                <% } %>
-            
-                <div id="add-member">
-                    <div class="teams-create-card">
-                        <form action="/teams/<%= selectedTeam.id %>/invite" method="post">
-                            <h3>Adicionar membro</h3>
-                            <label for="email">Email:</label>
-                            <input class="input-name" type="text" name="email" id="">
-                            <!-- <input type="hidden" name="email" id="" value=""> -->
-                            <div class="teams-button-container">
-                                <div class="teams-button cancel" onclick="toggleModalMember()"><p>Cancelar</p></div>
-                                <input class="teams-button" type="submit" value="Adicionar">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            <% } %>
-
+            </div>
             <div class="profile">
                 <a href="/users/update">
                     <div class="profileRow">

@@ -7,11 +7,6 @@ let date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
-// console.log('currentMonth ',currentMonth);
-// console.log('currentYear ',currentYear);
-
-console.log('selectedTeam ',selectedTeam);
-
 let days = [];
 
 const months = [
@@ -29,16 +24,20 @@ const months = [
     {id: 11, txt: 'Dezembro', days: 31},
 ];
 
+const getRandomColor = () => {
+    let colors = ['#8F79E7', '#B0E779', '#79E7A5', '#E79A79'];
+    let index = Math.floor(Math.random()*colors.length);
+
+    return colors[index];
+}
+
 const getAllDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1);
-
     const dates = [];
-
     while (date.getMonth() === month) {
         dates.push(new Date(date));
         date.setDate(date.getDate() + 1);
     }
-
     return dates;
 }
 
@@ -65,17 +64,26 @@ const generateDays = (date) => {
 }
 
 const showEvent = (event) => {
-    console.log('event ',event)
+    // console.log('event ',event)
+    let groupname = document.getElementById('schedule-group');
     let title = document.getElementById('schedule-title');
     let datetime = document.getElementById('schedule-date');
     let description = document.getElementById('schedule-descriptionn');
 
-    let time = event.time.split(':');
+    if(groupname){
+        groupname.innerHTML = teams.find(item => item.id == event.id_team).name+" -  ";
+    }
+
+    let time = event.date.split('T')[1].split(':');
 
     title.innerHTML = event.title;
     datetime.innerHTML = time[0]+":"+time[1]+" hrs";
     description.innerHTML = event.description;
 
+    displayModal1 = false;
+    if(modal) {
+        modal.style.display = 'none';
+    }
     toggleModal2();
 }
 
@@ -86,14 +94,15 @@ const renderCalendar = (days) => {
 
     days.map(item => {
         let eventsString = "";
-        events.filter(item2 => new Date(item2.date).toISOString().split('T')[0] == new Date(item.date).toISOString().split('T')[0]).map(item2 => {
-            eventsString += `<hr class='calendar-event-btn' style='border-color: ${item2.color}' onclick='showEvent(${JSON.stringify(item2)})'></hr>`;
+        schedules.filter(item2 => new Date(item2.date).toISOString().split('T')[0] == new Date(item.date).toISOString().split('T')[0]).map(item2 => {
+            let color = getRandomColor();
+            eventsString += `<hr class='calendar-event-btn' style='border-color: ${color}' onclick='showEvent(${JSON.stringify(item2)})'></hr>`;
         })
         
         divCalendarWeek.innerHTML += `
             <div 
                 class="calendar-day ${item.date == date.toDateString() ? 'today' : ''}" >
-                <div onClick="addSchedule('${currentYear}-${currentMonth}-${item.day}')">
+                <div onClick="addSchedule('${currentYear}-${currentMonth+1}-${item.day}')">
                     <p>${item.day != null ? item.day : ''}</p>
                 </div>
 
@@ -105,13 +114,17 @@ const renderCalendar = (days) => {
 }
 
 const addSchedule = (date) => {
-    console.log('date ',date);
-    let form = document.getElementById('schedule-form');
-    let hiddeninputs = document.getElementById('schedule-hidden-inputs');
-
-    hiddeninputs.innerHTML = `<input type="hidden" id="schedule-form-inputdate" name="date" value="${date}">`;
+    if(selectedTeam){
+        console.log('date ',date);
+        let form = document.getElementById('schedule-form');
+        let hiddeninputs = document.getElementById('schedule-hidden-inputs');
     
-    toggleModal1();
+        hiddeninputs.innerHTML = `<input type="hidden" id="schedule-form-inputdate" name="date" value="${date}">`;
+        
+        displayModal2 = false;
+        modal2.style.display = 'none';
+        toggleModal1();
+    }
 }
 
 let displayModal1 = false;
@@ -120,16 +133,29 @@ let displayModal2 = false;
 let modal2 = document.getElementById('schedule-show-bg');
 
 const toggleModal1 = () => {
+    displayModal2 = false;
+    if(modal2) { modal2.style.display = 'none'; }
+
     displayModal1 = !displayModal1;
-    console.log('modal ',modal)
-    if(displayModal1) modal.style.display = 'flex';
-    else modal.style.display = 'none';
+
+    if(displayModal1) {
+        modal.style.display = 'flex';
+    } else {
+        modal.style.display = 'none';
+    }
 }
 
 const toggleModal2 = () => {
+    displayModal1 = false;
+    if(modal) { modal.style.display = 'none'; }
+
     displayModal2 = !displayModal2;
-    if(displayModal2) modal2.style.display = 'flex';
-    else modal2.style.display = 'none';
+    
+    if(displayModal2) {
+        modal2.style.display = 'flex';
+    } else {
+        modal2.style.display = 'none';
+    }
 }
 
 const nextMonth = () => {

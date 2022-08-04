@@ -20,7 +20,6 @@
 }
 .team-box {
     width: 20%;
-    color: #79BCE7;
     text-align: center;
     border-radius: 5px;
     border: 1px solid #79BCE7;
@@ -32,10 +31,19 @@
     font-size: 1em;
 }
 
+.team-box a {
+    color: #79BCE7;
+    text-decoration: none;
+}
+
 .selected {
     background-color: #79BCE7;
-    color: #000;
     border: 1px solid transparent;
+}
+
+.selected a {
+    color: #000;
+    text-decoration: none;
 }
 
 .team-box button {

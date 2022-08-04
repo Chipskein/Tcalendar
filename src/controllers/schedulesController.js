@@ -15,7 +15,7 @@ async function verifyUsersSchedule(teamUsersIds,date){
                 and "Schedules"."date" = '${new Date(date).toISOString()}'
 	    `;
         const usersSchedules=await rawQuery(query);
-        const isDateAvaliableInUserSchedule = !usersSchedules.length>0 ? true:false;
+        const isDateAvaliableInUserSchedule = !usersSchedules.length > 0 ? true : false;
         return isDateAvaliableInUserSchedule;
     
 }
@@ -33,29 +33,37 @@ async function isDateAvaliable(id_team,date){
     const teamUsersIds=[];
     teamUsers.map(teamUser=>teamUsersIds.push(teamUser.dataValues.id_user))
     const isDateAvaliableInUserSchedule=await verifyUsersSchedule(teamUsersIds,date);
-    if (!isDateAvaliableInUserSchedule) return false;
-    return true;
+    if (!isDateAvaliableInUserSchedule) {
+        return false;
+    } else {
+        return true;
+    }
 }
 class SchduleController{
     static list(req,res){
         return res.send('TESTANDo');
     }
     static async create(req,res){
-        const { id_team, id_user, date, time }=req.body;
+        const { id_team, id_user, date, time, title, description }=req.body;
         let formatedDate = new Date(date+" "+time+":00")
-
+        // console.log('formatedDate ',formatedDate)
+        // console.log('id_team ',id_team)
         try {
             let testee = await isDateAvaliable(id_team, formatedDate);
+            let testee2 = isAValidDate(formatedDate);
             if(await isDateAvaliable(id_team, formatedDate) && isAValidDate(formatedDate)){
                 const schedule=await Schedules.create({
                     id_team,
                     id_user,
-                    date: formatedDate
+                    date: formatedDate,
+                    title,
+                    description,
                 })
                 //enviar notifcação para todos do time
-                return res.status(200).json(schedule);
+                return res.redirect('/enterprises/home/');
+            } else {
+                return res.status(400).json('Data não disponivel');
             }
-            return res.status(200).json('Data não disponivel');
         } catch (error) {
             return res.json({error});
         }

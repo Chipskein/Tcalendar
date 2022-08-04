@@ -1,16 +1,18 @@
 <div class="teams-container">
     <div class="teams-box-container">
-        <% for (let team of teams){ %> 
+        <% for (let team of JSON.parse(teams)){ %> 
             <% if(selectedTeam && team.id == selectedTeam.id){ %>
                 <div class="team-box selected">
-                    <p><%=team.name%></p>
-                </div>
+                    <a href="/enterprises/home/">
+                        <p><%=team.name%></p>
+                    </a>
+                </div>   
             <% } else { %>
-                <form action="/enterprises/home/<%= team.id %>" class="team-box" method="get">
-                    <button>
-                        <%=team.name%>
-                    </button>
-                </form>
+                <div class="team-box">
+                    <a href="/enterprises/home/<%= team.id %>">
+                        <p><%=team.name%></p>
+                    </a>
+                </div>   
             <% } %>
         <% } %> 
     </div>

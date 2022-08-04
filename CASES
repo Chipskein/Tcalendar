@@ -48,6 +48,8 @@ SCHEDULES:
     created_at
     date
     duration
+    title
+    description
     hasEnded
 
 

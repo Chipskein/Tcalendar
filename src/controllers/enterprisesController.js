@@ -2,14 +2,15 @@ const { Users } = require("../models/usersModel");
 const { Teams_users } = require("../models/teams_usersModel");
 const { Enterprises } = require("../models/enterprisesModel");
 const { Enterprise_users } = require("../models/enterprise_usersModel");
+const { Schedules } = require("../models/schedulesModel");
 class EnterpriseController{
     static showCreateForm(req,res){
         return res.render('createEnterprise',{});
     }
     static async showHome(req,res){
         const { user }=req.data;
-        const { enterprise,teams }=user;
-        let owner= (user.id==enterprise.owner) ? true:false; 
+        let { enterprise, teams } = user;
+        let owner = (user.id == enterprise.owner) ? true:false; 
         const { id }=req.params;
         let selectedTeam = null;
         let members = [];
@@ -17,12 +18,23 @@ class EnterpriseController{
             selectedTeam = teams.find(item => item.id == id);
             members = await Teams_users.findAll({ where: { id_team: id }, include: Users});
         }
-        console.log('user ',user);
-        // console.log('teams ',teams);
-        console.log('selectedTeam ',selectedTeam);
-        // console.log('members ',members[0].dataValues.Users[0].dataValues.name);
 
-        return res.render('homeEnterprise',{ user, enterprise, teams, selectedTeam, members, owner });
+        let schedules = [];
+        if(!id){
+            let teamsIds = [];
+            teams.map(item => { teamsIds.push(item.id) });
+            schedules = await Schedules.findAll({ where: { id_team: teamsIds }});
+            console.log('schedules ',schedules);
+            schedules = JSON.stringify(schedules);
+        } else {
+            schedules = await Schedules.findAll({ where: { id_team: id }});
+            console.log('schedules ',schedules);
+            schedules = JSON.stringify(schedules);
+        }
+
+        teams = JSON.stringify(teams);
+
+        return res.render('homeEnterprise', { user, enterprise, teams, selectedTeam, schedules, members, owner });
     }
     static async createEnterprise(req,res){
         const user=req.data.user;
