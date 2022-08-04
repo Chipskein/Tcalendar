@@ -31,7 +31,8 @@
 .footer {
     grid-area: footer;
     display: flex;
-    justify-self: center;
+    justify-self: flex-end;
+    margin-right: 4%;
 }
 .header {
     display: flex;
@@ -92,9 +93,10 @@
 }
 .memberSubtitle{
     font-size: 12px;
-    opacity: 0.5;
+    opacity: 0.6;
     margin: 0px;
 }
+
 .memberTitle{
     margin: 12px 0px 0px 0px;
     font-size: 14px;
@@ -124,4 +126,92 @@
     background-color: #191919;
     cursor: pointer;
     margin-top: 20px;
+}
+@media (max-width:1400px) {
+    .memberSubtitle{
+        font-size: 10px;
+    }
+    .main {
+        display: grid;
+        grid-template-areas: "body     aside"
+                             "calendar aside"
+                             "footer   aside"
+        ;
+        grid-template-columns: 85vw 15vw;
+        grid-template-rows: 10vh 80vh 9vh;
+    }
+    .aside {
+        grid-area: aside;
+        background-color: #191919;
+        display: grid;
+        height: 100vh;
+        grid-template-rows: 90vh 10vh;
+    }
+    .members {
+        padding-left: 10px;
+    }
+    .profileSubtitle {
+        display: none;
+    }
+    .memberTitle{
+        font-size: 12px;
+    }
+    .memberSubtitle{
+        display: none;
+    }
+    .add-member-button{
+        border: 1px solid #79BCE7;
+        width: 140px;
+        height: 45px;
+        align-items: center;
+        border-radius: 10px;
+        font-weight: bold;
+        color: #79BCE7;
+        background-color: #191919;
+        cursor: pointer;
+        margin-top: 20px;
+    }    
+}
+@media (max-width:1170px) {
+    .members {
+        padding-left: 10px;
+    }
+    .profileSubtitle {
+        display: none;
+    }
+    .profileText{
+        display: none;
+    }
+    .memberTitle{
+        display: none;
+    }
+    .memberSubtitle{
+        display: none;
+    }
+    .add-member-button{
+        border: 1px solid #79BCE7;
+        width: 100px;
+        height: 45px;
+        align-items: center;
+        border-radius: 10px;
+        font-weight: bold;
+        color: #79BCE7;
+        background-color: #191919;
+        cursor: pointer;
+        margin-top: 20px;
+    }    
+}
+@media (max-width:850px) {
+    .main {
+    display: grid;
+    grid-template-areas: "body"
+                         "calendar"
+                         "footer"
+    ;
+    grid-template-columns: 100vw;
+    grid-template-rows: 10vh 80vh 9vh;
+}
+.aside {
+    display: none;
+}
 }

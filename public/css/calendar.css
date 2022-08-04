@@ -10,7 +10,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 1vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-bottom: 1%;
 
 }
@@ -88,10 +88,47 @@
 }
 
 .calendar-event-btn {
-    width: 40%;
+    width: 37%;
     border-width: 6px;
     border-radius: 10px;
     border-style: solid;
+}
+
+@media (max-width: 1400px){
+    .calendar-event-btn {
+        width: 30%;
+    }
+}
+
+@media (max-width: 800px){
+    .calendar-event-btn {
+        width: 15%;
+    }
+    #calendar-month-name, #calendar-year-number {
+        font-size: 1em;
+    }
+    .arrow-reverse {
+        height: 20px;
+        width: 20px;
+        transform: rotate(180deg);
+    }
+    .arrow {
+        height: 20px;
+        width: 20px;
+    }
+.calendar-weekNames {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 85vw;
+    align-items: center;
+    text-align: center;
+}
+.calendar-week {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* grid-template-rows: 10vh 10vh 10vh 10vh 10vh; */
+    width: 85vw;
+}
 }
 
 #schedule-form {
