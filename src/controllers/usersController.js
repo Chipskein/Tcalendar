@@ -30,7 +30,7 @@ class UserController{
         }
     }
     static async showForgetMyPasswordForm(req,res){
-        return res.render('showForgetPassword',{err:false});
+        return res.render('showForgetPassword',{msg:false});
     }
     static async forgetMyPasswordForm(req,res){
         try{
@@ -46,10 +46,10 @@ class UserController{
                 team:false,
                 enterprise:false
             },'reset_password');
-            return res.send('Email Enviado');
+            return res.render('showForgetPassword',{msg:`Email Enviado para ${email}`});   
         }
         catch(err){
-            return res.render('showForgetPassword',{err:err.message});   
+            return res.render('showForgetPassword',{msg:err.message});   
         }
     }
     static async ShowUpdate(req,res){

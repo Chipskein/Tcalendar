@@ -37,18 +37,30 @@ class TeamsController{
             response_date:new Date()
         },{where:{id_user:user,id_team:team}});
         
-        await Teams_users.create({
+        const isUserInTeam=await Teams_users.findOne({where:{
             id_user:user,
             id_team:team
-        });
-        
-        await Enterprise_users.create({
+        }})
+        const isUserInEnterprise=await Enterprise_users.findOne({where:{
             id_user:user,
             id_enterprise:enterprise
-        });
+        }})
+
+        if(!isUserInTeam){
+            await Teams_users.create({
+                id_user:user,
+                id_team:team
+            });
+        }
+
+        if(!isUserInEnterprise){
+            await Enterprise_users.create({
+                id_user:user,
+                id_enterprise:enterprise
+            });
+        }
         const session_token=await prepareSessionToken(user,email);
         res.cookie('token', session_token);
-        
         if(isNewUser) return res.redirect(`/users/update`);
         return res.redirect('/enterprise/home');
     }
@@ -57,10 +69,8 @@ class TeamsController{
             console.log('inviteUserToTeam')
             const teamId = req.params.id;
             const { email } = req.body;
-            console.log('email ',email)
             const  userAdmin  = req.data.user;
             const { enterprise } = userAdmin;
-            console.log('enterprise ',enterprise)
             let team=await Teams.findOne({where:{id:teamId}});
             team = team ? team.dataValues:false
             if(!team) throw Error('Time não existe');

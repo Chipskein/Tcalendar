@@ -24,11 +24,9 @@ class EnterpriseController{
             let teamsIds = [];
             teams.map(item => { teamsIds.push(item.id) });
             schedules = await Schedules.findAll({ where: { id_team: teamsIds }});
-            console.log('schedules ',schedules);
             schedules = JSON.stringify(schedules);
         } else {
             schedules = await Schedules.findAll({ where: { id_team: id }});
-            console.log('schedules ',schedules);
             schedules = JSON.stringify(schedules);
         }
 

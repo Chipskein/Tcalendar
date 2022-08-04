@@ -41,28 +41,25 @@ async function isDateAvaliable(id_team,date){
 }
 class SchduleController{
     static list(req,res){
-        return res.send('TESTANDo');
+        return res.redirect('/enterprises/home/');
     }
     static async create(req,res){
         const { id_team, id_user, date, time, title, description }=req.body;
         let formatedDate = new Date(date+" "+time+":00")
-        // console.log('formatedDate ',formatedDate)
-        // console.log('id_team ',id_team)
+        console.log(req.body);
         try {
-            let testee = await isDateAvaliable(id_team, formatedDate);
-            let testee2 = isAValidDate(formatedDate);
             if(await isDateAvaliable(id_team, formatedDate) && isAValidDate(formatedDate)){
-                const schedule=await Schedules.create({
+                await Schedules.create({
                     id_team,
                     id_user,
                     date: formatedDate,
                     title,
                     description,
                 })
-                //enviar notifcação para todos do time
+                console.log("Horario Alocado")
                 return res.redirect('/enterprises/home/');
             } else {
-                return res.status(400).json('Data não disponivel');
+                return res.redirect('/enterprises/home/');
             }
         } catch (error) {
             return res.json({error});
